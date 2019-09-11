@@ -52,6 +52,27 @@ app.use('/ledger',(req, res, next) =>  {
         });
     }	
 });
+app.use('/stock',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			stock();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
 
 
 app.use((req, res, next) => {
@@ -204,6 +225,9 @@ strXml += "<REQUESTDATA>";
                         strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
                         strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
                         strXml += "</OLDAUDITENTRYIDS.LIST>";
+						strXml += "<ADDITIONALNAME.LIST>";
+						strXml += "<ADDITIONALNAME> "+ CUSTOMERCODE +"/ADDITIONALNAME>";
+						strXml += "</ADDITIONALNAME.LIST>";
                         strXml += "<GUID></GUID>";
                         strXml += "<PARENT>" + PARENT + "</PARENT>";
                         strXml += "<LANGUAGENAME.LIST>";
@@ -232,6 +256,80 @@ strXml += "<REQUESTDATA>";
                         strXml += "<ISCOSTCENTRESON>No</ISCOSTCENTRESON>";
                         strXml += "<AFFECTSSTOCK>No</AFFECTSSTOCK>";
                         strXml += "</LEDGER>";	                    
+                        strXml += "</TALLYMESSAGE>";                      
+                     };   
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+
+function stock(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+    
+
+    for (var i = 0; i < excelData.length; i++)
+                    {
+                        let ALIAS    		= (excelData[i]["ALIAS"]);
+                        let NAME            = (excelData[i]["NAME"]);
+                        let PARENT      	= (excelData[i]["PARENT"]);
+                        let CATEGORY  		= (excelData[i]["CATEGORY"]);
+                        let UOM        		= (excelData[i]["UOM"]);
+                        let COSTING        	= (excelData[i]["COSTING"]);
+                        let OPENINGSTOCK 	= (excelData[i]["OPENING STOCK"]);
+                        let OPENINGRATE     = (excelData[i]["OPENINGRATE"]);
+						let Amttype  		= ((OPENINGSTOCK * OPENINGRATE)*-1 );
+						
+                        
+                        
+
+                            
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+                        strXml += "<STOCKITEM NAME=\"" + NAME + "\" RESERVEDNAME=\"\">";
+						strXml += "<OLDAUDITENTRYIDS.LIST TYPE="Number">";
+						strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
+						strXml += "</OLDAUDITENTRYIDS.LIST>";
+						strXml += "<GUID></GUID>";
+						strXml += "<ADDITIONALNAME.LIST>";
+						strXml += "<ADDITIONALNAME> " + ALIAS + "</ADDITIONALNAME>";
+						strXml += " </ADDITIONALNAME.LIST>";
+    					strXml += " <PARENT>" + PARENT + "</PARENT>";
+						strXml += " <CATEGORY>" + CATEGORY + "</CATEGORY>";
+						strXml += " <OPENINGBALANCE> " + OPENINGSTOCK + "</OPENINGBALANCE>";
+						strXml += " <OPENINGVALUE>  " + Amttype + "</OPENINGVALUE>";
+						strXml += " <OPENINGRATE> " + OPENINGRATE + "</OPENINGRATE>";
+						strXml += " <COSTINGMETHOD> " + COSTING + "</COSTINGMETHOD>";
+						strXml += " <VALUATIONMETHOD>Avg. Price</VALUATIONMETHOD>";
+						strXml += " <BASEUNITS> " + UOM + "</BASEUNITS>";
+						strXml += " <ASORIGINAL>Yes</ASORIGINAL>";
+						strXml += " <IGNOREPHYSICALDIFFERENCE>No</IGNOREPHYSICALDIFFERENCE>";
+						strXml += " <IGNORENEGATIVESTOCK>No</IGNORENEGATIVESTOCK>";
+						strXml += " <TREATSALESASMANUFACTURED>No</TREATSALESASMANUFACTURED>";
+						strXml += " <TREATPURCHASESASCONSUMED>No</TREATPURCHASESASCONSUMED>";
+						strXml += " <TREATREJECTSASSCRAP>No</TREATREJECTSASSCRAP>";
+						strXml += " <HASMFGDATE>No</HASMFGDATE>";
+						strXml += " <ALLOWUSEOFEXPIREDITEMS>No</ALLOWUSEOFEXPIREDITEMS>";
+						strXml += " <LANGUAGENAME.LIST>";
+						strXml += "  <NAME.LIST TYPE="String">";
+						strXml += "   <NAME> " + NAME + "</NAME>";
+						strXml += "  </NAME.LIST>";
+						strXml += "  <LANGUAGEID> 1033</LANGUAGEID>";
+						strXml += " </LANGUAGENAME.LIST>";
+						strXml += " </STOCKITEM>         ";        
                         strXml += "</TALLYMESSAGE>";                      
                      };   
 strXml += "</REQUESTDATA>";

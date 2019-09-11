@@ -1,0 +1,127 @@
+<!-- These XML tags are added to Cell A1 automatically at run-time by UDI-Magic -->
+<XMLTAGS CELLREFERENCE="A1" xmlns:UDF="TallyUDF">
+
+<!-- Create UNIT masters based on Column I data-->
+<MASTER TYPE="UNIT">
+  <NAME COLUMNREFERENCE="I"/>
+  <ISSIMPLEUNIT>Yes</ISSIMPLEUNIT>
+</MASTER>
+
+<!-- Create a single GODWN Master record-->
+<MASTER TYPE="GODOWN" SINGLERECORD="YES">
+   <NAME.LIST>
+   <NAME>HO-BUNDER</NAME>
+   </NAME.LIST>
+  <PARENT/>
+</MASTER>
+
+<!-- Create StockCategory masters based on Column H data-->
+<MASTER TYPE="STOCKCATEGORY">
+   <NAME.LIST>
+     <NAME FORMULA="=IF(ISNA(H#),&quot;&quot;,H#)"/>
+   </NAME.LIST>
+  <PARENT/>
+</MASTER>
+
+<!-- Create StockGroup masters based on Column G data-->
+<MASTER TYPE="STOCKGROUP">
+  <NAME.LIST>
+     <NAME COLUMNREFERENCE="G"/>
+  </NAME.LIST>
+  <PARENT/>
+  <!-- Costing method to be taken from Column k-->
+  <COSTINGMETHOD COLUMNREFERENCE="K"/>
+  <VALUATIONMETHOD>Avg. Price</VALUATIONMETHOD>
+  <!-- Base Units to be taken from Column I-->
+  <BASEUNITS COLUMNREFERENCE="I"/>
+  <ADDITIONALUNITS/>
+</MASTER>
+
+<!-- Create Ledger masters based on Column H data-->
+<MASTER TYPE="LEDGER">
+   <NAME.LIST>
+     <NAME COLUMNREFERENCE="D"/>
+   </NAME.LIST>
+  <PARENT>Sales Accounts</PARENT>
+  <ISCOSTCENTREON>Yes</ISCOSTCENTREON>
+  <AFFECTSSTOCK>Yes</AFFECTSSTOCK>
+  <USEFORVAT>Yes</USEFORVAT>
+</MASTER>
+
+
+<!-- Create StockItem Masters -->
+<MASTER TYPE="STOCKITEM">
+  <NAME.LIST>
+    <!-- ItemName to be taken from Column A -->
+    <NAME COLUMNREFERENCE="A"/>
+  </NAME.LIST>
+  <ADDITIONALNAME.LIST>
+    <!-- Part No to be taken from Column B -->
+    <ADDITIONALNAME COLUMNREFERENCE="B"/>
+    <!-- Part No Alias to be taken from Column C -->
+    <ADDITIONALNAME COLUMNREFERENCE="C"/>
+  </ADDITIONALNAME.LIST>
+  <!-- StockGroup to be taken from Column G -->
+  <PARENT COLUMNREFERENCE="G"/>
+  <!-- Category to be taken from Column H -->
+  <CATEGORY FORMULA="=IF(ISNA(H#),&quot;&quot;,H#)"/>
+
+  <!-- UOM to be taken from Column I -->
+  <BASEUNITS COLUMNREFERENCE="I"/>
+  <!-- VAT Rate to be taken from Column J -->
+  <RATEOFVAT COLUMNREFERENCE="J"/>
+  <!-- CostingMethod to be taken from Column K -->
+  <COSTINGMETHOD COLUMNREFERENCE="K"/>
+  <VALUATIONMETHOD>Avg. Price</VALUATIONMETHOD>
+  <ISCOSTCENTRESON>No</ISCOSTCENTRESON>
+
+  <!-- OpeningStock qty to be taken from Column L -->
+  <OPENINGBALANCE COLUMNREFERENCE="L"/>
+  <!-- OpeningStock value is computed  -->
+  <OPENINGVALUE FORMULA="=+L# * O# * -1"/>
+  <!-- OpeningStock Rate to be taken from Column O -->
+  <OPENINGRATE COLUMNREFERENCE="O"/>
+
+  <!-- Opening-Stock Allocation for Main Location -->
+  <BATCHALLOCATIONS.LIST>
+   <GODOWNNAME>Main Location</GODOWNNAME>
+   <BATCHNAME>Primary Batch</BATCHNAME>
+   <OPENINGBALANCE COLUMNREFERENCE="N"/>
+  <OPENINGVALUE FORMULA="=+N# * O# * -1"/>
+  <OPENINGRATE COLUMNREFERENCE="O"/>
+  </BATCHALLOCATIONS.LIST>
+
+  <!-- Opening-Stock Allocation for Branch -->
+  <BATCHALLOCATIONS.LIST>
+  <!-- BranchName to be specified here -->
+   <GODOWNNAME>HO-BUNDER</GODOWNNAME>
+   <BATCHNAME>Primary Batch</BATCHNAME>
+   <OPENINGBALANCE COLUMNREFERENCE="M"/>
+  <OPENINGVALUE FORMULA="=+M# * O# * -1"/>
+  <OPENINGRATE COLUMNREFERENCE="O"/>
+  </BATCHALLOCATIONS.LIST>
+
+  <!-- These tags relate to option SET MODIFY DEFAULT LEDGER FOR INVOICING -->
+  <SALESLIST.LIST>
+   <!-- LedgerName -->
+   <NAME COLUMNREFERENCE="D"/>
+   <!-- VAT Class -->
+   <TAXCLASSIFICATIONNAME COLUMNREFERENCE="E"/>
+   <!-- Posting Specifies the posting percentage -->
+   <CLASSRATE FORMULA="=+F# / 100"/>
+   <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>
+  </SALESLIST.LIST>
+
+  <!-- Price list details-->
+  <FULLPRICELIST.LIST>
+   <DATE>20080401</DATE>
+   <PRICELEVEL>Mrp</PRICELEVEL>
+   <PRICELEVELLIST.LIST>
+    <RATE FORMULA="=+R# &amp; &quot;/&quot; &amp; I#"/>
+    <DISCOUNT COLUMNREFERENCE="Q"/>
+   </PRICELEVELLIST.LIST>
+  </FULLPRICELIST.LIST>
+
+ </MASTER>
+
+</XMLTAGS>
