@@ -193,9 +193,9 @@ strXml += "<REQUESTDATA>";
 						let Amttype  		= (excelData[i]["Amt-type"]);
 						
                         if (Amttype == "Cr" || Amttype == "CR" || Amttype == "cr"){
-                            OPENING  = (OPENING * -1);
+                            OPENING  = (OPENING * 1);
                             
-                        }else {OPENING  = (OPENING * 1)};
+                        }else {OPENING  = (OPENING * -1)};
                         
 
                             
