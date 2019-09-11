@@ -22,7 +22,28 @@ app.use('/upload',(req, res, next) =>  {
         req.on('end', function () {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
-			tally();
+			voucher();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
+app.use('/ledger',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			ledger();
 			 res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
@@ -42,7 +63,7 @@ app.listen(PORT);
 console.log('listening on port ' + PORT);
 
 
- function tally(){
+ function voucher(){
   strXml = "";
 strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 strXml += "<ENVELOPE>";
@@ -124,6 +145,93 @@ strXml += "<REQUESTDATA>";
                         strXml += "<VATEXPAMOUNT>" + AMOUNT2 + "</VATEXPAMOUNT>";
                         strXml += "</ALLLEDGERENTRIES.LIST>";
                         strXml += "</VOUCHER>";            
+                        strXml += "</TALLYMESSAGE>";                      
+                     };   
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+
+ function ledger(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+    
+
+    for (var i = 0; i < excelData.length; i++)
+                    {
+                        let CUSTOMERCODE    = (excelData[i]["CUSTOMER CODE"]);
+                        let NAME            = (excelData[i]["NAME"]);
+                        let PARENT      	= (excelData[i]["PARENT"]);
+                        let ADDRESS1  		= (excelData[i]["ADDRESS 1"]);
+                        let ADDRESS2        = (excelData[i]["ADDRESS 2"]);
+                        let ADDRESS3        = (excelData[i]["ADDRESS3"]);
+                        let STATE         	= (excelData[i]["STATE"]);
+                        let PIN          	= (excelData[i]["PIN"]);
+                        let CONTACTPERSON  	= (excelData[i]["CONTACT PERSON"]);
+						let TELEPHONE   	= (excelData[i]["TELEPHONE NO. "]);
+						let MOBILE 			= (excelData[i]["MOBILE NO."]);
+						let FAX  			= (excelData[i]["FAX"]);
+						let EMAIL  			= (excelData[i]["E-MAIL"]);
+						let PAN  			= (excelData[i]["PAN / IT NO."]);
+						let TIN   			= (excelData[i]["TIN "]);
+						let CSTNO  			= (excelData[i]["CST NO"]);
+						let OPENING 		= (excelData[i]["OPENING DR/CR"]);
+						let Amttype  		= (excelData[i]["Amt-type"]);
+						
+                        if (Amttype == "Cr" || Amttype == "CR" || Amttype == "cr"){
+                            OPENING  = (OPENING * -1);
+                            
+                        }else {OPENING  = (OPENING * 1)};
+                        
+
+                            
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+                        strXml += "<LEDGER NAME=\""+ NAME +"\" RESERVEDNAME=\"\">";
+                        strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
+                        strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
+                        strXml += "</OLDAUDITENTRYIDS.LIST>";
+                        strXml += "<GUID></GUID>";
+                        strXml += "<PARENT>" + PARENT + "</PARENT>";
+                        strXml += "<LANGUAGENAME.LIST>";
+                        strXml += "<NAME.LIST TYPE=\"String\">";
+                        strXml += "<NAME>" + NAME + "</NAME>";
+                        strXml += "</NAME.LIST>";
+                        strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
+                        strXml += "</LANGUAGENAME.LIST>";
+	                    strXml += "<ADDRESS.LIST>";
+                        strXml += "<ADDRESS>" + ADDRESS1 + " </ADDRESS>";
+                        strXml += "<ADDRESS>" + ADDRESS2 + " </ADDRESS>";
+                        strXml += "<ADDRESS>" + ADDRESS3 + " </ADDRESS>";
+                        strXml += "</ADDRESS.LIST>";
+	                    strXml += "<STATENAME> " + STATE + "</STATENAME>";
+                        strXml += "<PINCODE> " + PIN + " </PINCODE>";
+                        strXml += "<LEDGERCONTACT> " + CONTACTPERSON + " </LEDGERCONTACT>";
+                        strXml += "<LEDGERPHONE> " + TELEPHONE + " </LEDGERPHONE>";
+						strXml += "<LEDGERPHONE> " + MOBILE + " </LEDGERPHONE>";
+                        strXml += "<LEDGERFAX> " + FAX + " </LEDGERFAX>";
+                        strXml += "<EMAIL> " + EMAIL + " </EMAIL>";
+                        strXml += "<INCOMETAXNUMBER> " + PAN + " </INCOMETAXNUMBER>";
+                        strXml += "<VATTINNUMBER> " + TIN + " </VATTINNUMBER>";
+                        strXml += "<SALESTAXNUMBER> " + CSTNO + " </SALESTAXNUMBER>";
+                        strXml += "<OPENINGBALANCE> " + OPENING + " </OPENINGBALANCE>";
+                        strXml += "<ISBILLWISEON>Yes</ISBILLWISEON>";
+                        strXml += "<ISCOSTCENTRESON>No</ISCOSTCENTRESON>";
+                        strXml += "<AFFECTSSTOCK>No</AFFECTSSTOCK>";
+                        strXml += "</LEDGER>";	                    
                         strXml += "</TALLYMESSAGE>";                      
                      };   
 strXml += "</REQUESTDATA>";
