@@ -299,6 +299,36 @@ strXml += "<REQUESTDATA>";
 
                             
                         strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+						strXml += "<UNIT NAME=\"" + UOM + "\" RESERVEDNAME=\"\">";
+						strXml += "<ISSIMPLEUNIT>Yes</ISSIMPLEUNIT>";
+						strXml += "</UNIT>";
+						strXml += "</TALLYMESSAGE>";
+						
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+						strXml += "<STOCKCATEGORY NAME=\"" + CATEGORY + "\" RESERVEDNAME=\"\">";
+						strXml += "<PARENT/>";
+						strXml += " <LANGUAGENAME.LIST>";
+						strXml += "  <NAME.LIST TYPE=\"String\">";
+						strXml += "   <NAME> " + CATEGORY + "</NAME>";
+						strXml += "  </NAME.LIST>";
+						strXml += "  <LANGUAGEID> 1033</LANGUAGEID>";
+						strXml += " </LANGUAGENAME.LIST>";
+						strXml += "</STOCKCATEGORY>";
+						strXml += "</TALLYMESSAGE>";
+						
+						strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+						strXml += "<STOCKGROUP NAME=\"" + PARENT + "\" RESERVEDNAME=\"\">";
+						strXml += "<PARENT/>";
+						strXml += " <LANGUAGENAME.LIST>";
+						strXml += "  <NAME.LIST TYPE=\"String\">";
+						strXml += "   <NAME> " + PARENT + "</NAME>";
+						strXml += "  </NAME.LIST>";
+						strXml += "  <LANGUAGEID> 1033</LANGUAGEID>";
+						strXml += " </LANGUAGENAME.LIST>";
+						strXml += "</STOCKGROUP>";
+						strXml += "</TALLYMESSAGE>";
+						
+						strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
                         strXml += "<STOCKITEM NAME=\"" + NAME + "\" RESERVEDNAME=\"\">";
 						strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
 						strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
