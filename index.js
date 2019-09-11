@@ -267,7 +267,7 @@ strXml += "</ENVELOPE>";
 	return strXml;
 };
 
-function stock(){
+ function stock(){
   strXml = "";
 strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 strXml += "<ENVELOPE>";
@@ -300,7 +300,7 @@ strXml += "<REQUESTDATA>";
                             
                         strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
                         strXml += "<STOCKITEM NAME=\"" + NAME + "\" RESERVEDNAME=\"\">";
-						strXml += "<OLDAUDITENTRYIDS.LIST TYPE="Number">";
+						strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
 						strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
 						strXml += "</OLDAUDITENTRYIDS.LIST>";
 						strXml += "<GUID></GUID>";
@@ -324,7 +324,7 @@ strXml += "<REQUESTDATA>";
 						strXml += " <HASMFGDATE>No</HASMFGDATE>";
 						strXml += " <ALLOWUSEOFEXPIREDITEMS>No</ALLOWUSEOFEXPIREDITEMS>";
 						strXml += " <LANGUAGENAME.LIST>";
-						strXml += "  <NAME.LIST TYPE="String">";
+						strXml += "  <NAME.LIST TYPE=\"String\">";
 						strXml += "   <NAME> " + NAME + "</NAME>";
 						strXml += "  </NAME.LIST>";
 						strXml += "  <LANGUAGEID> 1033</LANGUAGEID>";
