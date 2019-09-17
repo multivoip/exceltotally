@@ -443,11 +443,12 @@ strXml += "<REQUESTDATA>";
                         let VoucherNo   	= (excelData[i]["Voucher No."]);
 
                         let Value        	= (excelData[i]["Value"]);
+						let TValue        	= (excelData[i]["Gross Total"]);
 						
                         let ROUND 		= (excelData[i]["ROUND OFF"]);
 						
                         let vat     = (excelData[i]["VAT"]);
-						let totalValue        	= (Value + ROUND + vat);
+						
 						
 						
                         
@@ -486,12 +487,12 @@ strXml += "<REQUESTDATA>";
      strXml += " <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
      strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
      strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += " <AMOUNT>-"+totalValue+"</AMOUNT>"; 
+     strXml += " <AMOUNT>-"+TValue+"</AMOUNT>"; 
      strXml += " <BILLALLOCATIONS.LIST>"; 
      strXml += " <NAME>" + VoucherNo + "</NAME>"; 
      strXml += "  <BILLTYPE>New Ref</BILLTYPE>"; 
      strXml += "  <TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>"; 
-     strXml += "  <AMOUNT>-"+totalValue+"</AMOUNT>"; 
+     strXml += "  <AMOUNT>-"+TValue+"</AMOUNT>"; 
      strXml += " </BILLALLOCATIONS.LIST>"; 
      strXml += "</LEDGERENTRIES.LIST>"; 
 	 strXml += "<LEDGERENTRIES.LIST>"; 
@@ -538,19 +539,20 @@ strXml += "<REQUESTDATA>";
 	                    let Quantity  		= (excelData[t]["Quantity"]);
                         let Rate       		= (excelData[t]["Rate"]);					
                         let itemParticulars     = (excelData[t]["NAME"]);
+						let Rvalue       		= (Quantity * Rate);
      strXml += "<ALLINVENTORYENTRIES.LIST>"; 
      strXml += " <STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
      strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
      strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
      strXml += " <RATE>"+Rate+"/PC</RATE>"; 
-     strXml += " <AMOUNT>"+Value+"</AMOUNT>"; 
+     strXml += " <AMOUNT>"+Rvalue+"</AMOUNT>"; 
      strXml += " <ACTUALQTY> "+Quantity +"PC</ACTUALQTY>"; 
      strXml += " <BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
      strXml += " <BATCHALLOCATIONS.LIST>"; 
      strXml += " <GODOWNNAME>Main Location</GODOWNNAME>"; 
      strXml += "  <BATCHNAME>Primary Batch</BATCHNAME>"; 
      strXml += "  <DESTINATIONGODOWNNAME>Main Location</DESTINATIONGODOWNNAME>"; 
-     strXml += "  <AMOUNT>"+Value+"</AMOUNT>"; 
+     strXml += "  <AMOUNT>"+Rvalue+"</AMOUNT>"; 
      strXml += "  <ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
      strXml += " <BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
      strXml += "</BATCHALLOCATIONS.LIST>"; 
