@@ -440,7 +440,7 @@ strXml += "<REQUESTDATA>";
 						else {
 						
                         let salDate    		= (excelData[i]["Date"]);
-                        let Particulars     = (excelData[i]["NAME"]);
+                        let Particulars     = (excelData[i]["Particulars"]);
                         let VoucherNo   	= (excelData[i]["Voucher No."]);
 
                         let Value        	= (excelData[i]["Value"]);
@@ -539,7 +539,7 @@ strXml += "<REQUESTDATA>";
 
 	                    let Quantity  		= (excelData[t]["Quantity"]);
                         let Rate       		= (excelData[t]["Rate"]);					
-                        let itemParticulars     = (excelData[t]["NAME"]);
+                        let itemParticulars     = (excelData[t]["Particulars"]);
 						let Rvalue       		= (Quantity * Rate);
      strXml += "<ALLINVENTORYENTRIES.LIST>"; 
      strXml += " <STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
