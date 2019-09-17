@@ -13,6 +13,7 @@ var strXml = "";
 app.use('/upload',(req, res, next) =>  {
 
 	if (req.method == 'POST') {
+		console.log(req);
         var jsonString = '';
 
         req.on('data', function (data) {
@@ -23,8 +24,8 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			// res.header("Access-Control-Allow-Origin", "*");
-			//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
@@ -414,7 +415,7 @@ strXml += "</ENVELOPE>";
 	return strXml;
 };
 
- function Sales(){
+ function sales(){
   strXml = "";
 strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 strXml += "<ENVELOPE>";
