@@ -23,8 +23,8 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			 res.header("Access-Control-Allow-Origin", "*");
-			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			// res.header("Access-Control-Allow-Origin", "*");
+			//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
