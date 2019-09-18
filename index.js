@@ -434,7 +434,7 @@ strXml += "<REQUESTDATA>";
 						
     for (var i = 0; i < excelData.length; i++)
                     {
-						if ((excelData[i]["Date"]) == "" ){
+						if ((excelData[i]["Date"]) == null ){
                           
                         }
 						else {
@@ -446,9 +446,13 @@ strXml += "<REQUESTDATA>";
                         let Value        	= (excelData[i]["Value"]);
 						let TValue        	= (excelData[i]["Gross Total"]);
 						
-                        let ROUND 		= (excelData[i]["ROUND OFF"]);
+                        let ROUND 		= if ((excelData[i]["ROUND OFF"] !== null ){
+							ROUND 		= (excelData[i]["ROUND OFF"])
+											}else{ROUND = 0});
 						
-                        let vat     = (excelData[i]["VAT"]);
+                        let vat     = 	if ((excelData[i]["VAT"] !== null ){
+											vat 		= (excelData[i]["VAT"])
+											}else{vat = 0});
 						
 						
 						
@@ -457,84 +461,82 @@ strXml += "<REQUESTDATA>";
 
                             
      strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
-	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\" Sales  \" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
+	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"Sales\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += " </OLDAUDITENTRYIDS.LIST>"; 
-     strXml += " <DATE>" + salDate + "</DATE>"; 
-     strXml += " <GUID></GUID>"; 
-     strXml += " <PARTYNAME>" + Particulars + "</PARTYNAME>"; 
-     strXml += " <VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>"; 
-     strXml += " <VOUCHERNUMBER>" + VoucherNo + "</VOUCHERNUMBER>"; 
-     strXml += " <PARTYLEDGERNAME>" + Particulars + "</PARTYLEDGERNAME>"; 
-     strXml += " <BASICBASEPARTYNAME>" + Particulars + "</BASICBASEPARTYNAME>"; 
-     strXml += " <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>"; 
-     strXml += " <DIFFACTUALQTY>No</DIFFACTUALQTY>"; 
-     strXml += " <ISMSTFROMSYNC>No</ISMSTFROMSYNC>"; 
-     strXml += " <ASORIGINAL>No</ASORIGINAL>"; 
-     strXml += " <EFFECTIVEDATE>" + salDate + "</EFFECTIVEDATE>"; 
-     strXml += " <ISISDVOUCHER>No</ISISDVOUCHER>"; 
-     strXml += " <ISINVOICE>Yes</ISINVOICE>"; 
-     strXml += " <ISVATDUTYPAID>Yes</ISVATDUTYPAID>"; 
+     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "<DATE>" + salDate + "</DATE>"; 
+     strXml += "<GUID></GUID>"; 
+     strXml += "<PARTYNAME>" + Particulars + "</PARTYNAME>"; 
+     strXml += "<VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>"; 
+     strXml += "<VOUCHERNUMBER>" + VoucherNo + "</VOUCHERNUMBER>"; 
+     strXml += "<PARTYLEDGERNAME>" + Particulars + "</PARTYLEDGERNAME>"; 
+     strXml += "<BASICBASEPARTYNAME>" + Particulars + "</BASICBASEPARTYNAME>"; 
+     strXml += "<PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>"; 
+     strXml += "<DIFFACTUALQTY>No</DIFFACTUALQTY>"; 
+     strXml += "<ISMSTFROMSYNC>No</ISMSTFROMSYNC>"; 
+     strXml += "<ASORIGINAL>No</ASORIGINAL>"; 
+     strXml += "<EFFECTIVEDATE>" + salDate + "</EFFECTIVEDATE>"; 
+     strXml += "<ISISDVOUCHER>No</ISISDVOUCHER>"; 
+     strXml += "<ISINVOICE>Yes</ISINVOICE>"; 
+     strXml += "<ISVATDUTYPAID>Yes</ISVATDUTYPAID>"; 
      strXml += "<LEDGERENTRIES.LIST>"; 
-     strXml += "  <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
-     strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += " </OLDAUDITENTRYIDS.LIST>"; 
-     strXml += " <LEDGERNAME>" + Particulars + "</LEDGERNAME>"; 
-     strXml += " <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
-     strXml += " <LEDGERFROMITEM>No</LEDGERFROMITEM>";
-     strXml += " <REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
-     strXml += " <ISPARTYLEDGER>Yes</ISPARTYLEDGER>"; 
-     strXml += " <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += " <AMOUNT>-"+TValue+"</AMOUNT>"; 
-     strXml += " <BILLALLOCATIONS.LIST>"; 
-     strXml += " <NAME>" + VoucherNo + "</NAME>"; 
-     strXml += "  <BILLTYPE>New Ref</BILLTYPE>"; 
-     strXml += "  <TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>"; 
-     strXml += "  <AMOUNT>-"+TValue+"</AMOUNT>"; 
-     strXml += " </BILLALLOCATIONS.LIST>"; 
+     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "<LEDGERNAME>" + Particulars + "</LEDGERNAME>"; 
+     strXml += "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
+     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>";
+     strXml += "<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
+     strXml += "<ISPARTYLEDGER>Yes</ISPARTYLEDGER>"; 
+     strXml += "<ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "<AMOUNT>-"+TValue+"</AMOUNT>"; 
+     strXml += "<BILLALLOCATIONS.LIST>"; 
+     strXml += "<NAME>" + VoucherNo + "</NAME>"; 
+     strXml += "<BILLTYPE>New Ref</BILLTYPE>"; 
+     strXml += "<TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>"; 
+     strXml += "<AMOUNT>-"+TValue+"</AMOUNT>"; 
+     strXml += "</BILLALLOCATIONS.LIST>"; 
      strXml += "</LEDGERENTRIES.LIST>"; 
 	 strXml += "<LEDGERENTRIES.LIST>"; 
-     strXml += "  <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
-     strXml += "   <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += "  </OLDAUDITENTRYIDS.LIST>"; 
-     strXml += "  <LEDGERNAME>OUTPUT VAT 5%</LEDGERNAME>"; 
-     strXml += "  <METHODTYPE>VAT</METHODTYPE>"; 
-     strXml += "  <GSTCLASS/>"; 
-     strXml += "  <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
-     strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
-     strXml += "  <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
-     strXml += "  <ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
-     strXml += "  <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "  <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += "  <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += "  <AMOUNT>"+vat +"</AMOUNT>"; 
-     strXml += "  <VATEXPAMOUNT>"+vat +"</VATEXPAMOUNT>"; 
-     strXml += " </LEDGERENTRIES.LIST>"; 
-	 strXml += " <LEDGERENTRIES.LIST>";
-     strXml += "   <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
-     strXml += "    <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
-     strXml += "   </OLDAUDITENTRYIDS.LIST>";
-     strXml += "   <ROUNDTYPE>Upward Rounding</ROUNDTYPE>";
-     strXml += "   <LEDGERNAME>ROUND OFF</LEDGERNAME>";
-     strXml += "   <METHODTYPE>As Total Amount Rounding</METHODTYPE>";
-     strXml += "   <GSTCLASS/>";
-     strXml += "   <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
-     strXml += "   <LEDGERFROMITEM>No</LEDGERFROMITEM>";
-     strXml += "   <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>";
-     strXml += "   <ISPARTYLEDGER>No</ISPARTYLEDGER>";
-     strXml += "   <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
-     strXml += "   <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
-     strXml += "   <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
-     strXml += "   <ROUNDLIMIT> 0.25</ROUNDLIMIT>";
-     strXml += "   <AMOUNT>"+ROUND +"</AMOUNT>";
-     strXml += "   <VATEXPAMOUNT>"+ROUND +"</VATEXPAMOUNT>";
-	 strXml += " </LEDGERENTRIES.LIST>"; 
+     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "<LEDGERNAME>OUTPUT VAT 5%</LEDGERNAME>"; 
+     strXml += "<METHODTYPE>VAT</METHODTYPE>"; 
+     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
+     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
+     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
+     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
+     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "<AMOUNT>"+vat +"</AMOUNT>"; 
+     strXml += "<VATEXPAMOUNT>"+vat +"</VATEXPAMOUNT>"; 
+     strXml += "</LEDGERENTRIES.LIST>"; 
+	 strXml += "<LEDGERENTRIES.LIST>";
+     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
+     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
+     strXml += "</OLDAUDITENTRYIDS.LIST>";
+     strXml += "<ROUNDTYPE>Upward Rounding</ROUNDTYPE>";
+     strXml += "<LEDGERNAME>ROUND OFF</LEDGERNAME>";
+     strXml += "<METHODTYPE>As Total Amount Rounding</METHODTYPE>";
+     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
+     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>";
+     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>";
+     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>";
+     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
+     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
+     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
+     strXml += "<ROUNDLIMIT> 0.25</ROUNDLIMIT>";
+     strXml += "<AMOUNT>"+ROUND +"</AMOUNT>";
+     strXml += "<VATEXPAMOUNT>"+ROUND +"</VATEXPAMOUNT>";
+	 strXml += "</LEDGERENTRIES.LIST>"; 
 	 for (var t = (i+1); t < excelData.length; t++)
                     {
-						if ((excelData[t]["Date"]) == "" ){
+						if ((excelData[t]["Date"]) == null){
                           
 
 	                    let Quantity  		= (excelData[t]["Quantity"]);
@@ -542,41 +544,41 @@ strXml += "<REQUESTDATA>";
                         let itemParticulars     = (excelData[t]["Particulars"]);
 						let Rvalue       		= (Quantity * Rate);
      strXml += "<ALLINVENTORYENTRIES.LIST>"; 
-     strXml += " <STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
-     strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
+     strXml += "<STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
+     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
      strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += " <RATE>"+Rate+"/PC</RATE>"; 
-     strXml += " <AMOUNT>"+Rvalue+"</AMOUNT>"; 
-     strXml += " <ACTUALQTY> "+Quantity +"PC</ACTUALQTY>"; 
-     strXml += " <BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
-     strXml += " <BATCHALLOCATIONS.LIST>"; 
-     strXml += " <GODOWNNAME>Main Location</GODOWNNAME>"; 
-     strXml += "  <BATCHNAME>Primary Batch</BATCHNAME>"; 
-     strXml += "  <DESTINATIONGODOWNNAME>Main Location</DESTINATIONGODOWNNAME>"; 
-     strXml += "  <AMOUNT>"+Rvalue+"</AMOUNT>"; 
-     strXml += "  <ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
-     strXml += " <BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
+     strXml += "<RATE>"+Rate+"/PC</RATE>"; 
+     strXml += "<AMOUNT>"+Rvalue+"</AMOUNT>"; 
+     strXml += "<ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
+     strXml += "<BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
+     strXml += "<BATCHALLOCATIONS.LIST>"; 
+     strXml += "<GODOWNNAME>Main Location</GODOWNNAME>"; 
+     strXml += "<BATCHNAME>Primary Batch</BATCHNAME>"; 
+     strXml += "<DESTINATIONGODOWNNAME>Main Location</DESTINATIONGODOWNNAME>"; 
+     strXml += "<AMOUNT>"+Rvalue+"</AMOUNT>"; 
+     strXml += "<ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
+     strXml += "<BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
      strXml += "</BATCHALLOCATIONS.LIST>"; 
+	 strXml += "</ALLINVENTORYENTRIES.LIST>";
 	                         }
 						else {
 							t = excelData.length;
 						};
 					};
-     strXml += " <ACCOUNTINGALLOCATIONS.LIST>"; 
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
-     strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += "<ACCOUNTINGALLOCATIONS.LIST>"; 
+     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += "</OLDAUDITENTRYIDS.LIST>"; 
-     strXml += " <LEDGERNAME>CREDIT SALE</LEDGERNAME>"; 
-     strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
-     strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
-     strXml += "  <REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
-     strXml += "  <ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
-     strXml += "  <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "  <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += "  <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += "  <AMOUNT>"+Value+"</AMOUNT>"; 
-     strXml += " </ACCOUNTINGALLOCATIONS.LIST>"; 
-     strXml += " </ALLINVENTORYENTRIES.LIST>      ";     
+     strXml += "<LEDGERNAME>CREDIT SALE</LEDGERNAME>"; 
+     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
+     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
+     strXml += "<REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
+     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
+     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "<AMOUNT>"+Value+"</AMOUNT>"; 
+     strXml += "</ACCOUNTINGALLOCATIONS.LIST>";           
 	 strXml += "</VOUCHER>";  	 
      strXml += "</TALLYMESSAGE>";   
 						};	 
@@ -609,7 +611,7 @@ strXml += "<REQUESTDATA>";
 						
     for (var i = 0; i < excelData.length; i++)
                     {
-						if ((excelData[i]["Date"]) == "" ){
+						if ((excelData[i]["Date"]) == null ){
                           
                         }
 						else {
@@ -620,10 +622,15 @@ strXml += "<REQUESTDATA>";
 
                         let Value        	= (excelData[i]["Value"]);
 						
-                        let ROUND 		= (excelData[i]["ROUND OFF"]);
+                        let ROUND 		= if ((excelData[i]["ROUND OFF"] !== null ){
+							ROUND 		= (excelData[i]["ROUND OFF"])
+											}else{ROUND = 0});
 						
-                        let vat     = (excelData[i]["VAT"]);
-						let totalValue        	= (Value + ROUND + vat);
+                        let vat     = 	if ((excelData[i]["VAT"] !== null ){
+											vat 		= (excelData[i]["VAT"])
+											}else{vat = 0});
+						
+						let TValue        	= (excelData[i]["Gross Total"]);
 						
 						
                         
@@ -662,12 +669,12 @@ strXml += "<REQUESTDATA>";
      strXml += " <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
      strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
      strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += " <AMOUNT>"+totalValue+"</AMOUNT>"; 
+     strXml += " <AMOUNT>"+TValue+"</AMOUNT>"; 
      strXml += " <BILLALLOCATIONS.LIST>"; 
      strXml += " <NAME>" + VoucherNo + "</NAME>"; 
      strXml += "  <BILLTYPE>New Ref</BILLTYPE>"; 
      strXml += "  <TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>"; 
-     strXml += "  <AMOUNT>"+totalValue+"</AMOUNT>"; 
+     strXml += "  <AMOUNT>"+TValue+"</AMOUNT>"; 
      strXml += " </BILLALLOCATIONS.LIST>"; 
      strXml += "</LEDGERENTRIES.LIST>"; 
 	 strXml += "<LEDGERENTRIES.LIST>"; 
@@ -676,7 +683,6 @@ strXml += "<REQUESTDATA>";
      strXml += "  </OLDAUDITENTRYIDS.LIST>"; 
      strXml += "  <LEDGERNAME>OUTPUT VAT 5%</LEDGERNAME>"; 
      strXml += "  <METHODTYPE>VAT</METHODTYPE>"; 
-     strXml += "  <GSTCLASS/>"; 
      strXml += "  <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
      strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
      strXml += "  <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
@@ -694,7 +700,6 @@ strXml += "<REQUESTDATA>";
      strXml += "   <ROUNDTYPE>Upward Rounding</ROUNDTYPE>";
      strXml += "   <LEDGERNAME>ROUND OFF</LEDGERNAME>";
      strXml += "   <METHODTYPE>As Total Amount Rounding</METHODTYPE>";
-     strXml += "   <GSTCLASS/>";
      strXml += "   <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>";
      strXml += "   <LEDGERFROMITEM>No</LEDGERFROMITEM>";
      strXml += "   <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>";
@@ -708,19 +713,20 @@ strXml += "<REQUESTDATA>";
 	 strXml += " </LEDGERENTRIES.LIST>"; 
 	 for (var t = (i+1); t < excelData.length; t++)
                     {
-						if ((excelData[t]["Date"]) == "" ){
+						if ((excelData[t]["Date"]) == null ){
                           
 
 	                    let Quantity  		= (excelData[t]["Quantity"]);
                         let Rate       		= (excelData[t]["Rate"]);					
                         let itemParticulars     = (excelData[t]["NAME"]);
+						let Rvalue       		= (Quantity * Rate);
      strXml += "<ALLINVENTORYENTRIES.LIST>"; 
      strXml += " <STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
      strXml += " <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
      strXml += "<ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
      strXml += " <RATE>"+Rate+"/PC</RATE>"; 
-     strXml += " <AMOUNT>-"+Value+"</AMOUNT>"; 
-     strXml += " <ACTUALQTY> "+Quantity +"PC</ACTUALQTY>"; 
+     strXml += " <AMOUNT>-"+Rvalue+"</AMOUNT>"; 
+     strXml += " <ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
      strXml += " <BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
      strXml += " <BATCHALLOCATIONS.LIST>"; 
      strXml += " <GODOWNNAME>Main Location</GODOWNNAME>"; 
