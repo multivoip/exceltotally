@@ -536,6 +536,7 @@ strXml += "<REQUESTDATA>";
      strXml += "<AMOUNT>"+ROUND +"</AMOUNT>";
      strXml += "<VATEXPAMOUNT>"+ROUND +"</VATEXPAMOUNT>";
 	 strXml += "</LEDGERENTRIES.LIST>"; 
+	 strXml += "<ALLINVENTORYENTRIES.LIST>"; 
 	 for (var t = (i+1); t < excelData.length; t++)
                     {
 						if ((excelData[t]["Date"]) == null){
@@ -545,7 +546,7 @@ strXml += "<REQUESTDATA>";
                         let Rate       		= (excelData[t]["Rate"]);					
                         let itemParticulars     = (excelData[t]["Particulars"]);
 						let Rvalue       		= (Quantity * Rate);
-     strXml += "<ALLINVENTORYENTRIES.LIST>"; 
+     
      strXml += "<STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
      strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
      strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
