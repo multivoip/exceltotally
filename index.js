@@ -561,7 +561,7 @@ strXml += "<REQUESTDATA>";
      strXml += "<ACTUALQTY> "+Quantity +" PC</ACTUALQTY>"; 
      strXml += "<BILLEDQTY> "+Quantity +" PC</BILLEDQTY>"; 
      strXml += "</BATCHALLOCATIONS.LIST>"; 
-	 strXml += "</ALLINVENTORYENTRIES.LIST>";
+	 
 	                         }
 						else {
 							t = excelData.length;
@@ -580,7 +580,8 @@ strXml += "<REQUESTDATA>";
      strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
      strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
      strXml += "<AMOUNT>"+Value+"</AMOUNT>"; 
-     strXml += "</ACCOUNTINGALLOCATIONS.LIST>";           
+     strXml += "</ACCOUNTINGALLOCATIONS.LIST>"; 
+	 strXml += "</ALLINVENTORYENTRIES.LIST>";	 
 	 strXml += "</VOUCHER>";  	 
      strXml += "</TALLYMESSAGE>";   
 						};	 
