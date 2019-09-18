@@ -4,4 +4,4 @@ git commit -m "inting"
 
 heroku login
 
-git push https://git.heroku.com/exceltotally.git master 
+git push https://git.heroku.com/exceltotally.git master

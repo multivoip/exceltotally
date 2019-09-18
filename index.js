@@ -446,13 +446,15 @@ strXml += "<REQUESTDATA>";
                         let Value        	= (excelData[i]["Value"]);
 						let TValue        	= (excelData[i]["Gross Total"]);
 						
-                        let ROUND 		= if ((excelData[i]["ROUND OFF"] !== null ){
+                        let ROUND 		= 0;
+						if ((excelData[i]["ROUND OFF"]) !== null ){
 							ROUND 		= (excelData[i]["ROUND OFF"])
-											}else{ROUND = 0});
+											};
 						
-                        let vat     = 	if ((excelData[i]["VAT"] !== null ){
+                        let vat     = 	0;
+						if ((excelData[i]["VAT"]) !== null ){
 											vat 		= (excelData[i]["VAT"])
-											}else{vat = 0});
+											};
 						
 						
 						
@@ -622,13 +624,15 @@ strXml += "<REQUESTDATA>";
 
                         let Value        	= (excelData[i]["Value"]);
 						
-                        let ROUND 		= if ((excelData[i]["ROUND OFF"] !== null ){
+                        let ROUND 		= 0;
+						if ((excelData[i]["ROUND OFF"]) !== null ){
 							ROUND 		= (excelData[i]["ROUND OFF"])
-											}else{ROUND = 0});
+											};
 						
-                        let vat     = 	if ((excelData[i]["VAT"] !== null ){
+                        let vat     = 	0;
+						if ((excelData[i]["VAT"]) !== null ){
 											vat 		= (excelData[i]["VAT"])
-											}else{vat = 0});
+											};
 						
 						let TValue        	= (excelData[i]["Gross Total"]);
 						
