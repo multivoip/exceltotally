@@ -687,7 +687,7 @@ strXml += "<REQUESTDATA>";
      strXml += "  <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "   <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += "  </OLDAUDITENTRYIDS.LIST>"; 
-     strXml += "  <LEDGERNAME>OUTPUT VAT 5%</LEDGERNAME>"; 
+     strXml += "  <LEDGERNAME>INPUT VAT 5%</LEDGERNAME>"; 
      strXml += "  <METHODTYPE>VAT</METHODTYPE>"; 
      strXml += "  <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
      strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
