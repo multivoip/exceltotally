@@ -9,6 +9,15 @@ var excelData = [];
 
 
 var strXml = "";
+app.use('/test',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+		console.log(req);
+    
+
+          
+    }	
+});
 
 app.use('/upload',(req, res, next) =>  {
 
