@@ -1105,7 +1105,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 						strXml += "<AFFECTSSTOCK>Yes</AFFECTSSTOCK>";
 						strXml += "<LANGUAGENAME.LIST>";
                         strXml += "<NAME.LIST TYPE=\"String\">";
-                        strXml += "<NAME>Purchase 28\%</NAME>";
+                        strXml += "<NAME>Sales 28\%</NAME>";
                         strXml += "</NAME.LIST>";
                         strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
                         strXml += "</LANGUAGENAME.LIST>";
@@ -1193,7 +1193,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 						strXml += "<AFFECTSSTOCK>Yes</AFFECTSSTOCK>";
 						strXml += "<LANGUAGENAME.LIST>";
                         strXml += "<NAME.LIST TYPE=\"String\">";
-                        strXml += "<NAME>Purchase 18\%</NAME>";
+                        strXml += "<NAME>Sales 18\%</NAME>";
                         strXml += "</NAME.LIST>";
                         strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
                         strXml += "</LANGUAGENAME.LIST>";
@@ -1281,7 +1281,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 						strXml += "<AFFECTSSTOCK>Yes</AFFECTSSTOCK>";
 						strXml += "<LANGUAGENAME.LIST>";
                         strXml += "<NAME.LIST TYPE=\"String\">";
-                        strXml += "<NAME>Purchase 12\%</NAME>";
+                        strXml += "<NAME>Sales 12\%</NAME>";
                         strXml += "</NAME.LIST>";
                         strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
                         strXml += "</LANGUAGENAME.LIST>";
@@ -1369,7 +1369,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 						strXml += "<AFFECTSSTOCK>Yes</AFFECTSSTOCK>";
 						strXml += "<LANGUAGENAME.LIST>";
                         strXml += "<NAME.LIST TYPE=\"String\">";
-                        strXml += "<NAME>Purchase 5\%</NAME>";
+                        strXml += "<NAME>Sales 5\%</NAME>";
                         strXml += "</NAME.LIST>";
                         strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
                         strXml += "</LANGUAGENAME.LIST>";
@@ -1473,90 +1473,28 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 						if ((excelData[i]["Date"]) == null ){
                           
                         }
-						else {let Particulars     = (excelData[i]["Particulars"]);
-						
-						strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
-                        strXml += "<LEDGER NAME=\""+ Particulars  +"\" RESERVEDNAME=\"\">";
-                        strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
-                        strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
-                        strXml += "</OLDAUDITENTRYIDS.LIST>";
-						strXml += "<GUID></GUID>";
-                        strXml += "<PARENT>Sundry Creditors</PARENT>";
-                        strXml += "<LANGUAGENAME.LIST>";
-                        strXml += "<NAME.LIST TYPE=\"String\">";
-                        strXml += "<NAME>" + Particulars  + "</NAME>";
-                        strXml += "</NAME.LIST>";
-                        strXml += "<LANGUAGEID> 1033</LANGUAGEID>";
-                        strXml += "</LANGUAGENAME.LIST>";
-	                    strXml += "</LEDGER>";	                    
-                        strXml += "</TALLYMESSAGE>";
+						else {
 						
                         let salDate    		= (excelData[i]["Date"]);
-                        
+                        let Particulars     = (excelData[i]["NAME"]);
                         let VoucherNo   	= (excelData[i]["Voucher No."]);
-						
-						let Value	=0;
-						let igst     =0;
-						let cgst     =0;
-						let sgst     =0;
-						let salesleg	="Purchase 28%";
-						let igstleg     ="IGST 28%";
-						let cgstleg     ="CGST 14%";
-						let sgstleg     ="SGST 14%";
-						if ((excelData[i]["Purchase 28%"]) !==null){
-							Value  = (excelData[i]["Purchase 28%"]);
-							if ((excelData[i]["IGST 28%"]) !==null){
-							igst  = (excelData[i]["IGST 28%"]);
-						}else {cgst = (excelData[i]["CGST 14%"]);
-								sgst=(excelData[i]["SGST 14%"]);
-						}
-						} else {if ((excelData[i]["Purchase 18%"]) !==null){
-							Value  = (excelData[i]["Purchase 18%"]);
-							salesleg	="Purchase 18%";
-							igstleg     ="IGST 18%";
-							cgstleg     ="CGST 9%";
-							sgstleg     ="SGST 9%";
-								if ((excelData[i]["IGST 18%"]) !==null){
-							igst  = (excelData[i]["IGST 18%"]);
-						}else {cgst = (excelData[i]["CGST 9%"]);
-								sgst=(excelData[i]["SGST 9%"]);
-						}							
-						} else {if ((excelData[i]["Purchase 12%"]) !==null){
-							Value  = (excelData[i]["Purchase 12%"]);
-							salesleg	="Purchase 12%";
-							igstleg     ="IGST 12%";
-							cgstleg     ="CGST 6%";
-							sgstleg     ="SGST 6%";
-								if ((excelData[i]["IGST 12%"]) !==null){
-							igst  = (excelData[i]["IGST 12%"]);
-						}else {cgst = (excelData[i]["CGST 6%"]);
-								sgst=(excelData[i]["SGST 6%"]);
-						}														
-						} else {if ((excelData[i]["Purchase 5%"]) !==null){
-							Value  = (excelData[i]["Purchase 5%"]);
-							salesleg	="Purchase 5%";
-							igstleg     ="IGST 5%";
-							cgstleg     ="CGST 2.5%";
-							sgstleg     ="SGST 2.5%";
-								if ((excelData[i]["IGST 5%"]) !==null){
-							igst  = (excelData[i]["IGST 5%"]);
-						}else {cgst = (excelData[i]["CGST 2.5%"]);
-								sgst=(excelData[i]["SGST 2.5%"]);
-						}														
-						}
-						}
-						}
-						}
-                        
-						let TValue        	= (excelData[i]["Gross Total"]);
+
+                        let Value        	= (excelData[i]["Value"]);
 						
                         let ROUND 		= 0;
 						if ((excelData[i]["ROUND OFF"]) !== null ){
 							ROUND 		= (excelData[i]["ROUND OFF"])
 											};
 						
+                        let vat     = 	0;
+						if ((excelData[i]["VAT"]) !== null ){
+											vat 		= (excelData[i]["VAT"])
+											};
 						
-                       
+						let TValue        	= (excelData[i]["Gross Total"]);
+						
+						
+                        
                         
 
                             
@@ -1604,68 +1542,36 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
      strXml += "  <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "   <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += "  </OLDAUDITENTRYIDS.LIST>"; 
-     strXml += "<LEDGERNAME>"+ igstleg +"</LEDGERNAME>"; 
-     strXml += "<METHODTYPE>VAT</METHODTYPE>"; 
-     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
-     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
-     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
-     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
-     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += "<AMOUNT>-"+ igst +"</AMOUNT>"; 
-     strXml += "<VATEXPAMOUNT>"+ igst +"</VATEXPAMOUNT>"; 
-     strXml += "</LEDGERENTRIES.LIST>"; 
-	 strXml += "<LEDGERENTRIES.LIST>"; 
-     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
-     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
-     strXml += "<LEDGERNAME>"+ cgstleg +"</LEDGERNAME>"; 
-     strXml += "<METHODTYPE>VAT</METHODTYPE>"; 
-     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
-     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
-     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
-     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
-     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += "<AMOUNT>-"+ cgst +"</AMOUNT>"; 
-     strXml += "<VATEXPAMOUNT>"+ cgst +"</VATEXPAMOUNT>"; 
-     strXml += "</LEDGERENTRIES.LIST>"; 
-	 strXml += "<LEDGERENTRIES.LIST>"; 
-     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
-     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
-     strXml += "<LEDGERNAME>"+ sgstleg +"</LEDGERNAME>"; 
-     strXml += "<METHODTYPE>VAT</METHODTYPE>"; 
-     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
-     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
-     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
-     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
-     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
-     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
-     strXml += "<AMOUNT>-"+ sgst +"</AMOUNT>"; 
-     strXml += "<VATEXPAMOUNT>"+ sgst +"</VATEXPAMOUNT>"; 
-     strXml += "</LEDGERENTRIES.LIST>"; 
-	 strXml += "<LEDGERENTRIES.LIST>";
-     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
-     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
-     strXml += "</OLDAUDITENTRYIDS.LIST>";
-     strXml += "<ROUNDTYPE>Upward Rounding</ROUNDTYPE>";
-     strXml += "<LEDGERNAME>ROUND OFF</LEDGERNAME>";
-     strXml += "<METHODTYPE>As Total Amount Rounding</METHODTYPE>";
-     strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
-     strXml += "<LEDGERFROMITEM>No</LEDGERFROMITEM>";
-     strXml += "<REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>";
-     strXml += "<ISPARTYLEDGER>No</ISPARTYLEDGER>";
-     strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
-     strXml += "<ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
-     strXml += "<ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
-     strXml += "<ROUNDLIMIT> 0.25</ROUNDLIMIT>";
-     strXml += "<AMOUNT>-"+ ROUND +"</AMOUNT>";
-     strXml += "<VATEXPAMOUNT>"+ ROUND +"</VATEXPAMOUNT>";
-	 strXml += "</LEDGERENTRIES.LIST>"; 
+     strXml += "  <LEDGERNAME>INPUT VAT 5%</LEDGERNAME>"; 
+     strXml += "  <METHODTYPE>VAT</METHODTYPE>"; 
+     strXml += "  <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
+     strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
+     strXml += "  <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>"; 
+     strXml += "  <ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
+     strXml += "  <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "  <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "  <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "  <AMOUNT>-"+vat +"</AMOUNT>"; 
+     strXml += "  <VATEXPAMOUNT>-"+vat +"</VATEXPAMOUNT>"; 
+     strXml += " </LEDGERENTRIES.LIST>"; 
+	 strXml += " <LEDGERENTRIES.LIST>";
+     strXml += "   <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
+     strXml += "    <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
+     strXml += "   </OLDAUDITENTRYIDS.LIST>";
+     strXml += "   <ROUNDTYPE>Upward Rounding</ROUNDTYPE>";
+     strXml += "   <LEDGERNAME>ROUND OFF</LEDGERNAME>";
+     strXml += "   <METHODTYPE>As Total Amount Rounding</METHODTYPE>";
+     strXml += "   <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>";
+     strXml += "   <LEDGERFROMITEM>No</LEDGERFROMITEM>";
+     strXml += "   <REMOVEZEROENTRIES>Yes</REMOVEZEROENTRIES>";
+     strXml += "   <ISPARTYLEDGER>No</ISPARTYLEDGER>";
+     strXml += "   <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>";
+     strXml += "   <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
+     strXml += "   <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
+     strXml += "   <ROUNDLIMIT> 0.25</ROUNDLIMIT>";
+     strXml += "   <AMOUNT>-"+ROUND +"</AMOUNT>";
+     strXml += "   <VATEXPAMOUNT>-"+ROUND +"</VATEXPAMOUNT>";
+	 strXml += " </LEDGERENTRIES.LIST>"; 
 	 strXml += "<ALLINVENTORYENTRIES.LIST>";
 	 for (var t = (i+1); t < excelData.length; t++)
                     {
@@ -1674,7 +1580,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 
 	                    let Quantity  		= (excelData[t]["Quantity"]);
                         let Rate       		= (excelData[t]["Rate"]);					
-                        let itemParticulars     = (excelData[t]["Particulars"]);
+                        let itemParticulars     = (excelData[t]["NAME"]);
 						let Rvalue       		= (Quantity * Rate);
       
      strXml += " <STOCKITEMNAME>"+itemParticulars+"</STOCKITEMNAME>"; 
@@ -1701,7 +1607,7 @@ strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
      strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += "</OLDAUDITENTRYIDS.LIST>"; 
-     strXml += " <LEDGERNAME>"+ salesleg +"</LEDGERNAME>"; 
+     strXml += " <LEDGERNAME>PURCHASE A/c</LEDGERNAME>"; 
      strXml += " <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
      strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
      strXml += "  <REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
