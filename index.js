@@ -6,7 +6,11 @@ const https = require('https').Server(app);
 
 var PORT = process.env.PORT || 5800
 var excelData = [];
-
+var cors = require ('cors');
+app.use(cors({
+    origin:['https://exceltotally.netlify.app','https://exceltotally.netlify.app//free.html','https://exceltotally.herokuapp.com/upload'],
+    credentials:true
+}));
 
 
 var strXml = "";
@@ -36,8 +40,10 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			res.header("Access-Control-Allow-Origin", "*");
-			res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+			res.header("Access-Control-Allow-Origin", "https://exceltotally.netlify.app/");
+			res.header('Access-Control-Allow-Headers', true);
+			res.header('Access-Control-Allow-Credentials', 'Content-Type');
+			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
