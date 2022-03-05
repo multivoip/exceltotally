@@ -41,7 +41,7 @@ app.use('/upload',(req, res, next) =>  {
 			excelData = JSON.parse(jsonString);
 			voucher();
 			res.header("Access-Control-Allow-Origin", "https://exceltotally.herokuapp.com/upload");
-			res.header('Access-Control-Allow-Headers', true);
+			res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept";
 			res.header('Access-Control-Allow-Credentials', 'Content-Type');
 			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
@@ -88,7 +88,7 @@ app.use('/ledger',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			ledger();
-			 res.header("Access-Control-Allow-Origin", "*");
+			 res.header("Access-Control-Allow-Origin", "https://exceltotally.herokuapp.com");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
