@@ -1,4 +1,4 @@
-git add .
+git git add .
 
 git commit -m "inting"
 
