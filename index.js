@@ -40,7 +40,7 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			res.header("Access-Control-Allow-Origin", "https://exceltotally.netlify.app/");
+			res.header("Access-Control-Allow-Origin", "https://exceltotally.herokuapp.com/upload");
 			res.header('Access-Control-Allow-Headers', true);
 			res.header('Access-Control-Allow-Credentials', 'Content-Type');
 			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
