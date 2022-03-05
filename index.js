@@ -6,12 +6,9 @@ const https = require('https').Server(app);
 
 var PORT = process.env.PORT || 5800
 var excelData = [];
-var cors = require ('cors');
-app.use(cors({
-    origin:['https://exceltotally.netlify.app','https://exceltotally.netlify.app/free.html','https://exceltotally.herokuapp.com/upload'],
-    credentials:true
-}));
 
+const cors = require('cors');
+app.use(cors());
 
 var strXml = "";
 //app.use('/',(req, res, next) =>  {
