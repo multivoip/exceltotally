@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const https = require('https').Server(app);
 
-var PORT = process.env.PORT || 5800
+var PORT = process.env.PORT || 5500
 var excelData = [];
 
 const cors = require('cors');
@@ -37,10 +37,8 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			res.header("Access-Control-Allow-Origin", "https://exceltotally.netlify.app","https://exceltotally.netlify.app/free.html","https://exceltotally.herokuapp.com/upload");
-			res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept";
-			res.header('Access-Control-Allow-Credentials', 'Content-Type');
-			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
@@ -85,7 +83,7 @@ app.use('/ledger',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			ledger();
-			 res.header("Access-Control-Allow-Origin", "https://exceltotally.herokuapp.com");
+			 res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
@@ -2065,9 +2063,9 @@ strXml += "<REQUESTDATA>";
                         let VoucherNo   		= (excelData[i]["Voucher No."]);
 						let VATDEALERTYPE   	= (excelData[i]["VATDEALERTYPE"]);
 						let PLACEOFSUPPLY   	= (excelData[i]["PLACEOFSUPPLY"]);
-						let Sales LEDGERNAME   	= (excelData[i]["Sales LEDGERNAME"]);
-						let Vat LEDGERNAME   	= (excelData[i]["Vat LEDGERNAME"]);
-						let Sales Amt   		= (excelData[i]["Sales Amt"]);
+						let SalesLEDGERNAME   	= (excelData[i]["Sales LEDGERNAME"]);
+						let VatLEDGERNAME   	= (excelData[i]["Vat LEDGERNAME"]);
+						let SalesAmt   			= (excelData[i]["Sales Amt"]);
 						let Vat   				= (excelData[i]["Vat"]);
 						let Total   			= (-(excelData[i]["Total"]));
 						
@@ -2193,7 +2191,7 @@ strXml += "<REQUESTDATA>";
      strXml += "<ORIGINVOICEDETAILS.LIST>      </ORIGINVOICEDETAILS.LIST>";
      strXml += "<INVOICEEXPORTLIST.LIST>      </INVOICEEXPORTLIST.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
      strXml += " <LEDGERNAME>"+ Particulars + "</LEDGERNAME>"; 
@@ -2231,10 +2229,10 @@ strXml += "<REQUESTDATA>";
      strXml += " <ADVANCETAXDETAILS.LIST>       </ADVANCETAXDETAILS.LIST>";
      strXml += "</LEDGERENTRIES.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
-     strXml += " <LEDGERNAME>" + Sales LEDGERNAME + "</LEDGERNAME>"; 
+     strXml += " <LEDGERNAME>" + SalesLEDGERNAME + "</LEDGERNAME>"; 
      strXml += " <STATNATURENAME>Domestic Taxable Supplies</STATNATURENAME>";
      strXml += " <GSTCLASS/>";
      strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
@@ -2244,8 +2242,8 @@ strXml += "<REQUESTDATA>";
      strXml += " <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
      strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
      strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
-     strXml += " <AMOUNT>" + Amt + "</AMOUNT>";
-     strXml += " <VATEXPAMOUNT>" + Amt + " </VATEXPAMOUNT>";
+     strXml += " <AMOUNT>" + SalesAmt + "</AMOUNT>";
+     strXml += " <VATEXPAMOUNT>" + SalesAmt + " </VATEXPAMOUNT>";
      strXml += " <SERVICETAXDETAILS.LIST>       </SERVICETAXDETAILS.LIST>";
      strXml += " <BANKALLOCATIONS.LIST>       </BANKALLOCATIONS.LIST>";
      strXml += " <BILLALLOCATIONS.LIST>       </BILLALLOCATIONS.LIST>";
@@ -2271,10 +2269,10 @@ strXml += "<REQUESTDATA>";
      strXml += " <ADVANCETAXDETAILS.LIST>       </ADVANCETAXDETAILS.LIST>";
      strXml += "</LEDGERENTRIES.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
-     strXml += " <LEDGERNAME>"+ Vat LEDGERNAME + "</LEDGERNAME>";
+     strXml += " <LEDGERNAME>"+ VatLEDGERNAME + "</LEDGERNAME>";
      strXml += " <GSTCLASS/>";
      strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
      strXml += " <LEDGERFROMITEM>No</LEDGERFROMITEM>";
