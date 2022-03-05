@@ -38,6 +38,8 @@ app.use('/upload',(req, res, next) =>  {
 			voucher();
 			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.headers.append('Access-Control-Allow-Origin', 'https://exceltotally.herokuapp.com/upload');
+			res.headers.append('Access-Control-Allow-Credentials', 'true');	
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
