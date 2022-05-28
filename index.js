@@ -179,7 +179,7 @@ app.use('/purchase',(req, res, next) =>  {
     }	
 });
 
-app.use('/stockv',(req, res, next) =>  {
+app.use('/fees',(req, res, next) =>  {
 
 	if (req.method == 'POST') {
         var jsonString = '';
@@ -2343,7 +2343,7 @@ strXml += "</ENVELOPE>";
 	return strXml;
 };
 
- function stockv(){
+ function fees(){
   strXml = "";
 strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 strXml += "<ENVELOPE>";
