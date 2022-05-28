@@ -7,8 +7,7 @@ const https = require('https').Server(app);
 var PORT = process.env.PORT || 5500
 var excelData = [];
 
-const cors = require('cors');
-app.use(cors());
+
 
 var strXml = "";
 //app.use('/',(req, res, next) =>  {
@@ -179,6 +178,29 @@ app.use('/purchase',(req, res, next) =>  {
         });
     }	
 });
+
+app.use('/stockv',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			stock();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
+
 
 app.use((req, res, next) => {
   res.status(404).render('404', { pageTitle: 'Page Not Found' });
@@ -2053,12 +2075,8 @@ strXml += "<REQUESTDATA>";
 
 
 						
-    for (var i = 0; i < excelData.length; i++)
-                    {
-						if ((excelData[i]["Date"]) == null ){
-                          
-                        }
-						else {let Particulars   = (excelData[i]["Particulars"]);					
+    for (var i = 0; i < excelData.length; i++){
+						let Particulars   = (excelData[i]["Particulars"]);					
                         let salDate    			= (excelData[i]["Date"]);
                         let VoucherNo   		= (excelData[i]["Voucher No."]);
 						let VATDEALERTYPE   	= (excelData[i]["VATDEALERTYPE"]);
@@ -2315,6 +2333,125 @@ strXml += "<REQUESTDATA>";
      strXml += "</VOUCHER>";
      strXml += "</TALLYMESSAGE>";
 						};	 
+                       
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+
+ function stockv(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+    
+
+    for (var i = 0; i < excelData.length; i++)
+                    {
+                       
+                        let DATE            = (excelData[i]["DATE"]);
+                        let NARRATION       = (excelData[i]["NARRATION"]);
+						let STOCKITEMNAME   = (excelData[i]["NAME"]);
+                        let VOUCHERTYPE     = "Stock Journal"                   
+                        let AMOUNT          = (excelData[i]["AMOUNT"]);
+                       
+                         
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+                        strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"" + VOUCHERTYPE +  "\" ACTION=\"Create\">";
+                        strXml += "<DATE>"+ DATE + "</DATE>";
+                        strXml += "<GUID></GUID>";
+                        strXml += "<NARRATION>" + NARRATION + "</NARRATION>";
+                        strXml += "<VOUCHERTYPENAME>" + VOUCHERTYPE +" </VOUCHERTYPENAME>";
+                        strXml += "<VOUCHERNUMBER></VOUCHERNUMBER>";
+                        strXml += "<CSTFORMISSUETYPE/>";
+                        strXml += "<CSTFORMRECVTYPE/>";
+                        strXml += "<PERSISTEDVIEW>Consumption Voucher View</PERSISTEDVIEW>";
+                        strXml += "<VCHGSTCLASS/>";
+						strXml += "<VCHENTRYMODE>Use for Stock Journal</VCHENTRYMODE>";
+						strXml += " <DIFFACTUALQTY>No</DIFFACTUALQTY>";
+						strXml += "<ISMSTFROMSYNC>No</ISMSTFROMSYNC>";
+						strXml += "<ASORIGINAL>No</ASORIGINAL>";
+						strXml += "<AUDITED>No</AUDITED>";
+						strXml += "<FORJOBCOSTING>No</FORJOBCOSTING>";
+						strXml += "<EFFECTIVEDATE>"+ DATE + "</EFFECTIVEDATE>";
+						strXml += "<ISCANCELLED>No</ISCANCELLED>";
+						strXml += "<HASCASHFLOW>No</HASCASHFLOW>";
+						strXml += "<ISPOSTDATED>No</ISPOSTDATED>";
+ 						strXml += "<USETRACKINGNUMBER>No</USETRACKINGNUMBER>";
+ 						strXml += "<ISINVOICE>No</ISINVOICE>";
+ 						strXml += "<MFGJOURNAL>No</MFGJOURNAL>";
+ 						strXml += "<HASDISCOUNTS>No</HASDISCOUNTS>";
+ 						strXml += "<ASPAYSLIP>No</ASPAYSLIP>";
+ 						strXml += "<ISCOSTCENTRE>No</ISCOSTCENTRE>";
+ 						strXml += "<ISSTXNONREALIZEDVCH>No</ISSTXNONREALIZEDVCH>";
+ 						strXml += "<ISEXCISEMANUFACTURERON>No</ISEXCISEMANUFACTURERON>";
+						strXml += "<ISBLANKCHEQUE>No</ISBLANKCHEQUE>";
+						strXml += "<ISVOID>No</ISVOID>";
+ 						strXml += "<ORDERLINESTATUS>No</ORDERLINESTATUS>";
+ 						strXml += "<VATISAGNSTCANCSALES>No</VATISAGNSTCANCSALES>";
+ 						strXml += "<VATISPURCEXEMPTED>No</VATISPURCEXEMPTED>";
+ 						strXml += "<ISVATRESTAXINVOICE>No</ISVATRESTAXINVOICE>";
+ 						strXml += "<VATISASSESABLECALCVCH>No</VATISASSESABLECALCVCH>";
+ 						strXml += "<ISVATDUTYPAID>Yes</ISVATDUTYPAID>";
+ 						strXml += "<ISDELIVERYSAMEASCONSIGNEE>No</ISDELIVERYSAMEASCONSIGNEE>";
+ 						strXml += "<ISDISPATCHSAMEASCONSIGNOR>No</ISDISPATCHSAMEASCONSIGNOR>";
+						strXml += "<ISDELETEDVCHRETAINED>No</ISDELETEDVCHRETAINED>";
+ 						strXml += "<CHANGEVCHMODE>No</CHANGEVCHMODE>";
+ 						strXml += "<RESETIRNQRCODE>No</RESETIRNQRCODE>";
+						strXml += "<ALTERID> </ALTERID>";
+						strXml += "<MASTERID> </MASTERID>";
+						strXml += "<VOUCHERKEY></VOUCHERKEY>";
+						strXml += "<INVOICEEXPORTLIST.LIST>      </INVOICEEXPORTLIST.LIST>";
+ 						strXml += "<INVENTORYENTRIESIN.LIST>";
+ 						strXml += " <STOCKITEMNAME>"+ STOCKITEMNAME +"</STOCKITEMNAME>";
+						strXml += " <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>";
+						strXml += " <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>";
+						strXml += " <ISAUTONEGATE>No</ISAUTONEGATE>";
+ 						strXml += " <ISCUSTOMSCLEARANCE>No</ISCUSTOMSCLEARANCE>";
+ 						strXml += " <ISTRACKCOMPONENT>No</ISTRACKCOMPONENT>";
+ 						strXml += " <ISTRACKPRODUCTION>No</ISTRACKPRODUCTION>";
+ 						strXml += " <ISPRIMARYITEM>No</ISPRIMARYITEM>";
+ 						strXml += " <ISSCRAP>No</ISSCRAP>";
+						strXml += " <AMOUNT>-" + AMOUNT +  "</AMOUNT>";
+ 						strXml += " <BATCHALLOCATIONS.LIST>";
+						strXml += "  <GODOWNNAME>Main Location</GODOWNNAME>";
+ 						strXml += "  <BATCHNAME>Primary Batch</BATCHNAME>";
+ 						strXml += "  <INDENTNO/>";
+						strXml += "  <ORDERNO/>";
+ 						strXml += "  <TRACKINGNUMBER/>";
+ 						strXml += "  <DYNAMICCSTISCLEARED>No</DYNAMICCSTISCLEARED>";
+ 						strXml += "  <AMOUNT>-" + AMOUNT +  "</AMOUNT>";
+ 						strXml += "  <ADDITIONALDETAILS.LIST>        </ADDITIONALDETAILS.LIST>";
+ 						strXml += "  <VOUCHERCOMPONENTLIST.LIST>        </VOUCHERCOMPONENTLIST.LIST>";
+ 						strXml += " </BATCHALLOCATIONS.LIST>";
+ 						strXml += " <DUTYHEADDETAILS.LIST>       </DUTYHEADDETAILS.LIST>";
+ 						strXml += " <SUPPLEMENTARYDUTYHEADDETAILS.LIST>       </SUPPLEMENTARYDUTYHEADDETAILS.LIST>";
+ 						strXml += " <TAXOBJECTALLOCATIONS.LIST>       </TAXOBJECTALLOCATIONS.LIST>";
+						strXml += " <COSTTRACKALLOCATIONS.LIST>       </COSTTRACKALLOCATIONS.LIST>";
+						strXml += " <REFVOUCHERDETAILS.LIST>       </REFVOUCHERDETAILS.LIST>";
+						strXml += " <EXCISEALLOCATIONS.LIST>       </EXCISEALLOCATIONS.LIST>";
+						strXml += " <EXPENSEALLOCATIONS.LIST>       </EXPENSEALLOCATIONS.LIST>";
+						strXml += "</INVENTORYENTRIESIN.LIST>";
+						strXml += "<INVENTORYENTRIESOUT.LIST>      </INVENTORYENTRIESOUT.LIST>";
+						strXml += "<PAYROLLMODEOFPAYMENT.LIST>      </PAYROLLMODEOFPAYMENT.LIST>";
+						strXml += "<ATTDRECORDS.LIST>      </ATTDRECORDS.LIST>";
+						strXml += "<GSTEWAYCONSIGNORADDRESS.LIST>      </GSTEWAYCONSIGNORADDRESS.LIST>";
+ 						strXml += "<GSTEWAYCONSIGNEEADDRESS.LIST>      </GSTEWAYCONSIGNEEADDRESS.LIST>";
+ 						strXml += "<TEMPGSTRATEDETAILS.LIST>      </TEMPGSTRATEDETAILS.LIST>";
+                        strXml += "</VOUCHER>";            
+                        strXml += "</TALLYMESSAGE>";                      
                      };   
 strXml += "</REQUESTDATA>";
 strXml += "</IMPORTDATA>";
