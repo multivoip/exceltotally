@@ -191,7 +191,7 @@ app.use('/fees',(req, res, next) =>  {
         req.on('end', function () {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
-			stock();
+			fees();
 			 res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
