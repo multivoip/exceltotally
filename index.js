@@ -4,11 +4,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const https = require('https').Server(app);
 
-var PORT = process.env.PORT || 5800
+var PORT = process.env.PORT || 5500
 var excelData = [];
 
-const cors = require('cors');
-app.use(cors());
+
 
 var strXml = "";
 //app.use('/',(req, res, next) =>  {
@@ -37,10 +36,8 @@ app.use('/upload',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			voucher();
-			res.header("Access-Control-Allow-Origin", "https://exceltotally.netlify.app","https://exceltotally.netlify.app/free.html","https://exceltotally.herokuapp.com/upload");
-			res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept";
-			res.header('Access-Control-Allow-Credentials', 'Content-Type');
-			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
 			
@@ -85,7 +82,7 @@ app.use('/ledger',(req, res, next) =>  {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			ledger();
-			 res.header("Access-Control-Allow-Origin", "https://exceltotally.herokuapp.com");
+			 res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)
@@ -181,6 +178,52 @@ app.use('/purchase',(req, res, next) =>  {
         });
     }	
 });
+
+app.use('/husk',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			husk();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
+
+
+app.use('/fees',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			fees();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
+
 
 app.use((req, res, next) => {
   res.status(404).render('404', { pageTitle: 'Page Not Found' });
@@ -2055,19 +2098,15 @@ strXml += "<REQUESTDATA>";
 
 
 						
-    for (var i = 0; i < excelData.length; i++)
-                    {
-						if ((excelData[i]["Date"]) == null ){
-                          
-                        }
-						else {let Particulars   = (excelData[i]["Particulars"]);					
+    for (var i = 0; i < excelData.length; i++){
+						let Particulars   = (excelData[i]["Particulars"]);					
                         let salDate    			= (excelData[i]["Date"]);
                         let VoucherNo   		= (excelData[i]["Voucher No."]);
 						let VATDEALERTYPE   	= (excelData[i]["VATDEALERTYPE"]);
 						let PLACEOFSUPPLY   	= (excelData[i]["PLACEOFSUPPLY"]);
-						let Sales LEDGERNAME   	= (excelData[i]["Sales LEDGERNAME"]);
-						let Vat LEDGERNAME   	= (excelData[i]["Vat LEDGERNAME"]);
-						let Sales Amt   		= (excelData[i]["Sales Amt"]);
+						let SalesLEDGERNAME   	= (excelData[i]["Sales LEDGERNAME"]);
+						let VatLEDGERNAME   	= (excelData[i]["Vat LEDGERNAME"]);
+						let SalesAmt   			= (excelData[i]["Sales Amt"]);
 						let Vat   				= (excelData[i]["Vat"]);
 						let Total   			= (-(excelData[i]["Total"]));
 						
@@ -2193,7 +2232,7 @@ strXml += "<REQUESTDATA>";
      strXml += "<ORIGINVOICEDETAILS.LIST>      </ORIGINVOICEDETAILS.LIST>";
      strXml += "<INVOICEEXPORTLIST.LIST>      </INVOICEEXPORTLIST.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
      strXml += " <LEDGERNAME>"+ Particulars + "</LEDGERNAME>"; 
@@ -2231,10 +2270,10 @@ strXml += "<REQUESTDATA>";
      strXml += " <ADVANCETAXDETAILS.LIST>       </ADVANCETAXDETAILS.LIST>";
      strXml += "</LEDGERENTRIES.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
-     strXml += " <LEDGERNAME>" + Sales LEDGERNAME + "</LEDGERNAME>"; 
+     strXml += " <LEDGERNAME>" + SalesLEDGERNAME + "</LEDGERNAME>"; 
      strXml += " <STATNATURENAME>Domestic Taxable Supplies</STATNATURENAME>";
      strXml += " <GSTCLASS/>";
      strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
@@ -2244,8 +2283,8 @@ strXml += "<REQUESTDATA>";
      strXml += " <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
      strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
      strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
-     strXml += " <AMOUNT>" + Amt + "</AMOUNT>";
-     strXml += " <VATEXPAMOUNT>" + Amt + " </VATEXPAMOUNT>";
+     strXml += " <AMOUNT>" + SalesAmt + "</AMOUNT>";
+     strXml += " <VATEXPAMOUNT>" + SalesAmt + " </VATEXPAMOUNT>";
      strXml += " <SERVICETAXDETAILS.LIST>       </SERVICETAXDETAILS.LIST>";
      strXml += " <BANKALLOCATIONS.LIST>       </BANKALLOCATIONS.LIST>";
      strXml += " <BILLALLOCATIONS.LIST>       </BILLALLOCATIONS.LIST>";
@@ -2271,10 +2310,10 @@ strXml += "<REQUESTDATA>";
      strXml += " <ADVANCETAXDETAILS.LIST>       </ADVANCETAXDETAILS.LIST>";
      strXml += "</LEDGERENTRIES.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
-     strXml += " <OLDAUDITENTRYIDS.LIST TYPE="Number">";
+     strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
      strXml += " </OLDAUDITENTRYIDS.LIST>";
-     strXml += " <LEDGERNAME>"+ Vat LEDGERNAME + "</LEDGERNAME>";
+     strXml += " <LEDGERNAME>"+ VatLEDGERNAME + "</LEDGERNAME>";
      strXml += " <GSTCLASS/>";
      strXml += " <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
      strXml += " <LEDGERFROMITEM>No</LEDGERFROMITEM>";
@@ -2317,7 +2356,302 @@ strXml += "<REQUESTDATA>";
      strXml += "</VOUCHER>";
      strXml += "</TALLYMESSAGE>";
 						};	 
+                       
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+
+ function fees(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+    
+
+    for (var i = 0; i < excelData.length; i++)
+                    {
+                       
+                        let DATE            = (excelData[i]["DATE"]);
+                        let NARRATION       = (excelData[i]["NARRATION"]);
+						let STOCKITEMNAME   = (excelData[i]["NAME"]);
+                        let VOUCHERTYPE     = "Stock Journal"                   
+                        let AMOUNT          = (excelData[i]["AMOUNT"]);
+                       
+                         
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+                        strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"" + VOUCHERTYPE +  "\" ACTION=\"Create\">";
+                        strXml += "<DATE>"+ DATE + "</DATE>";
+                        strXml += "<GUID></GUID>";
+                        strXml += "<NARRATION>" + NARRATION + "</NARRATION>";
+                        strXml += "<VOUCHERTYPENAME>" + VOUCHERTYPE +" </VOUCHERTYPENAME>";
+                        strXml += "<VOUCHERNUMBER></VOUCHERNUMBER>";
+                        strXml += "<CSTFORMISSUETYPE/>";
+                        strXml += "<CSTFORMRECVTYPE/>";
+                        strXml += "<PERSISTEDVIEW>Consumption Voucher View</PERSISTEDVIEW>";
+                        strXml += "<VCHGSTCLASS/>";
+						strXml += "<VCHENTRYMODE>Use for Stock Journal</VCHENTRYMODE>";
+						strXml += " <DIFFACTUALQTY>No</DIFFACTUALQTY>";
+						strXml += "<ISMSTFROMSYNC>No</ISMSTFROMSYNC>";
+						strXml += "<ASORIGINAL>No</ASORIGINAL>";
+						strXml += "<AUDITED>No</AUDITED>";
+						strXml += "<FORJOBCOSTING>No</FORJOBCOSTING>";
+						strXml += "<EFFECTIVEDATE>"+ DATE + "</EFFECTIVEDATE>";
+						strXml += "<ISCANCELLED>No</ISCANCELLED>";
+						strXml += "<HASCASHFLOW>No</HASCASHFLOW>";
+						strXml += "<ISPOSTDATED>No</ISPOSTDATED>";
+ 						strXml += "<USETRACKINGNUMBER>No</USETRACKINGNUMBER>";
+ 						strXml += "<ISINVOICE>No</ISINVOICE>";
+ 						strXml += "<MFGJOURNAL>No</MFGJOURNAL>";
+ 						strXml += "<HASDISCOUNTS>No</HASDISCOUNTS>";
+ 						strXml += "<ASPAYSLIP>No</ASPAYSLIP>";
+ 						strXml += "<ISCOSTCENTRE>No</ISCOSTCENTRE>";
+ 						strXml += "<ISSTXNONREALIZEDVCH>No</ISSTXNONREALIZEDVCH>";
+ 						strXml += "<ISEXCISEMANUFACTURERON>No</ISEXCISEMANUFACTURERON>";
+						strXml += "<ISBLANKCHEQUE>No</ISBLANKCHEQUE>";
+						strXml += "<ISVOID>No</ISVOID>";
+ 						strXml += "<ORDERLINESTATUS>No</ORDERLINESTATUS>";
+ 						strXml += "<VATISAGNSTCANCSALES>No</VATISAGNSTCANCSALES>";
+ 						strXml += "<VATISPURCEXEMPTED>No</VATISPURCEXEMPTED>";
+ 						strXml += "<ISVATRESTAXINVOICE>No</ISVATRESTAXINVOICE>";
+ 						strXml += "<VATISASSESABLECALCVCH>No</VATISASSESABLECALCVCH>";
+ 						strXml += "<ISVATDUTYPAID>Yes</ISVATDUTYPAID>";
+ 						strXml += "<ISDELIVERYSAMEASCONSIGNEE>No</ISDELIVERYSAMEASCONSIGNEE>";
+ 						strXml += "<ISDISPATCHSAMEASCONSIGNOR>No</ISDISPATCHSAMEASCONSIGNOR>";
+						strXml += "<ISDELETEDVCHRETAINED>No</ISDELETEDVCHRETAINED>";
+ 						strXml += "<CHANGEVCHMODE>No</CHANGEVCHMODE>";
+ 						strXml += "<RESETIRNQRCODE>No</RESETIRNQRCODE>";
+						strXml += "<ALTERID> </ALTERID>";
+						strXml += "<MASTERID> </MASTERID>";
+						strXml += "<VOUCHERKEY></VOUCHERKEY>";
+						strXml += "<INVOICEEXPORTLIST.LIST>      </INVOICEEXPORTLIST.LIST>";
+ 						strXml += "<INVENTORYENTRIESIN.LIST>";
+ 						strXml += " <STOCKITEMNAME>"+ STOCKITEMNAME +"</STOCKITEMNAME>";
+						strXml += " <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>";
+						strXml += " <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>";
+						strXml += " <ISAUTONEGATE>No</ISAUTONEGATE>";
+ 						strXml += " <ISCUSTOMSCLEARANCE>No</ISCUSTOMSCLEARANCE>";
+ 						strXml += " <ISTRACKCOMPONENT>No</ISTRACKCOMPONENT>";
+ 						strXml += " <ISTRACKPRODUCTION>No</ISTRACKPRODUCTION>";
+ 						strXml += " <ISPRIMARYITEM>No</ISPRIMARYITEM>";
+ 						strXml += " <ISSCRAP>No</ISSCRAP>";
+						strXml += " <AMOUNT>-" + AMOUNT +  "</AMOUNT>";
+ 						strXml += " <BATCHALLOCATIONS.LIST>";
+						strXml += "  <GODOWNNAME>Main Location</GODOWNNAME>";
+ 						strXml += "  <BATCHNAME>Primary Batch</BATCHNAME>";
+ 						strXml += "  <INDENTNO/>";
+						strXml += "  <ORDERNO/>";
+ 						strXml += "  <TRACKINGNUMBER/>";
+ 						strXml += "  <DYNAMICCSTISCLEARED>No</DYNAMICCSTISCLEARED>";
+ 						strXml += "  <AMOUNT>-" + AMOUNT +  "</AMOUNT>";
+ 						strXml += "  <ADDITIONALDETAILS.LIST>        </ADDITIONALDETAILS.LIST>";
+ 						strXml += "  <VOUCHERCOMPONENTLIST.LIST>        </VOUCHERCOMPONENTLIST.LIST>";
+ 						strXml += " </BATCHALLOCATIONS.LIST>";
+ 						strXml += " <DUTYHEADDETAILS.LIST>       </DUTYHEADDETAILS.LIST>";
+ 						strXml += " <SUPPLEMENTARYDUTYHEADDETAILS.LIST>       </SUPPLEMENTARYDUTYHEADDETAILS.LIST>";
+ 						strXml += " <TAXOBJECTALLOCATIONS.LIST>       </TAXOBJECTALLOCATIONS.LIST>";
+						strXml += " <COSTTRACKALLOCATIONS.LIST>       </COSTTRACKALLOCATIONS.LIST>";
+						strXml += " <REFVOUCHERDETAILS.LIST>       </REFVOUCHERDETAILS.LIST>";
+						strXml += " <EXCISEALLOCATIONS.LIST>       </EXCISEALLOCATIONS.LIST>";
+						strXml += " <EXPENSEALLOCATIONS.LIST>       </EXPENSEALLOCATIONS.LIST>";
+						strXml += "</INVENTORYENTRIESIN.LIST>";
+						strXml += "<INVENTORYENTRIESOUT.LIST>      </INVENTORYENTRIESOUT.LIST>";
+						strXml += "<PAYROLLMODEOFPAYMENT.LIST>      </PAYROLLMODEOFPAYMENT.LIST>";
+						strXml += "<ATTDRECORDS.LIST>      </ATTDRECORDS.LIST>";
+						strXml += "<GSTEWAYCONSIGNORADDRESS.LIST>      </GSTEWAYCONSIGNORADDRESS.LIST>";
+ 						strXml += "<GSTEWAYCONSIGNEEADDRESS.LIST>      </GSTEWAYCONSIGNEEADDRESS.LIST>";
+ 						strXml += "<TEMPGSTRATEDETAILS.LIST>      </TEMPGSTRATEDETAILS.LIST>";
+                        strXml += "</VOUCHER>";            
+                        strXml += "</TALLYMESSAGE>";                      
                      };   
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+
+function husk(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+       
+						
+    for (var i = 0; i < excelData.length; i++)
+                    {
+						let PartyName 	    = (excelData[i]["Party Name"]);
+						let Dated 			= (excelData[i]["DATE"]);
+						let Material		= (excelData[i]["Material"]);
+						let netwt 			= (excelData[i]["NET WT"]);
+						let Narration 		= (excelData[i]["narration"]);
+						let Rate 			= (excelData[i]["RATE"]);
+						let Amount 			= (excelData[i]["AMOUNT"]);
+						let Srno 			= (excelData[i]["Sr no"]);
+						let Purchaseac    	= (excelData[i]["Purchase AC"]);              
+
+                            
+     strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\" Purchase  \" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
+     strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += " </OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "<DATE>"+ Dated + "</DATE>"; 
+     strXml += " <PARTYNAME>"+ PartyName + "</PARTYNAME>"; 
+     strXml += " <PARTYLEDGERNAME>"+ PartyName + "</PARTYLEDGERNAME>"; 
+     strXml += " <VOUCHERNUMBER>"+ Srno + "</VOUCHERNUMBER>"; 
+     strXml += " <BASICBASEPARTYNAME>"+ PartyName + "</BASICBASEPARTYNAME>"; 
+     strXml += " <CSTFORMISSUETYPE/>"; 
+     strXml += " <CSTFORMRECVTYPE/>"; 
+     strXml += " <FBTPAYMENTTYPE>Default</FBTPAYMENTTYPE>"; 
+     strXml += " <PERSISTEDVIEW>Invoice Voucher View</PERSISTEDVIEW>"; 
+     strXml += " <PARTYMAILINGNAME>"+ PartyName + "</PARTYMAILINGNAME>"; 
+     strXml += " <VCHGSTCLASS/>"; 
+     strXml += " <VCHENTRYMODE>Item Invoice</VCHENTRYMODE>"; 
+     strXml += " <DIFFACTUALQTY>No</DIFFACTUALQTY>"; 
+     strXml += " <ISMSTFROMSYNC>No</ISMSTFROMSYNC>"; 
+     strXml += " <ASORIGINAL>No</ASORIGINAL>"; 
+     strXml += " <AUDITED>No</AUDITED>"; 
+     strXml += "<FORJOBCOSTING>No</FORJOBCOSTING>"; 
+     strXml += " <ISOPTIONAL>No</ISOPTIONAL>"; 
+     strXml += " <EFFECTIVEDATE>"+ Dated + "</EFFECTIVEDATE>"; 
+     strXml += " <USEFOREXCISE>No</USEFOREXCISE>"; 
+     strXml += " <ISFORJOBWORKIN>No</ISFORJOBWORKIN>"; 
+     strXml += " <ALLOWCONSUMPTION>No</ALLOWCONSUMPTION>"; 
+     strXml += " <USEFORINTEREST>No</USEFORINTEREST>"; 
+     strXml += " <USEFORGAINLOSS>No</USEFORGAINLOSS>"; 
+     strXml += " <USEFORGODOWNTRANSFER>No</USEFORGODOWNTRANSFER>"; 
+     strXml += " <USEFORCOMPOUND>No</USEFORCOMPOUND>"; 
+     strXml += " <USEFORSERVICETAX>No</USEFORSERVICETAX>"; 
+     strXml += " <ISDELETED>No</ISDELETED>"; 
+     strXml += " <ISONHOLD>No</ISONHOLD>"; 
+     strXml += " <ISBOENOTAPPLICABLE>No</ISBOENOTAPPLICABLE>"; 
+     strXml += " <ISEXCISEVOUCHER>No</ISEXCISEVOUCHER>"; 
+     strXml += " <EXCISETAXOVERRIDE>No</EXCISETAXOVERRIDE>"; 
+     strXml += " <USEFORTAXUNITTRANSFER>No</USEFORTAXUNITTRANSFER>"; 
+     strXml += " <IGNOREPOSVALIDATION>No</IGNOREPOSVALIDATION>"; 
+     strXml += " <EXCISEOPENING>No</EXCISEOPENING>"; 
+     strXml += " <USEFORFINALPRODUCTION>No</USEFORFINALPRODUCTION>"; 
+     strXml += " <ISTDSOVERRIDDEN>No</ISTDSOVERRIDDEN>"; 
+     strXml += " <ISTCSOVERRIDDEN>No</ISTCSOVERRIDDEN>"; 
+     strXml += " <ISTDSTCSCASHVCH>No</ISTDSTCSCASHVCH>"; 
+     strXml += " <INCLUDEADVPYMTVCH>No</INCLUDEADVPYMTVCH>"; 
+     strXml += " <ISSUBWORKSCONTRACT>No</ISSUBWORKSCONTRACT>"; 
+     strXml += " <ISVATOVERRIDDEN>No</ISVATOVERRIDDEN>"; 
+     strXml += " <IGNOREORIGVCHDATE>No</IGNOREORIGVCHDATE>"; 
+     strXml += " <ISVATPAIDATCUSTOMS>No</ISVATPAIDATCUSTOMS>"; 
+     strXml += " <ISDECLAREDTOCUSTOMS>No</ISDECLAREDTOCUSTOMS>";
+     strXml += " <ISSERVICETAXOVERRIDDEN>No</ISSERVICETAXOVERRIDDEN>"; 
+     strXml += " <ISISDVOUCHER>No</ISISDVOUCHER>"; 
+     strXml += " <ISEXCISEOVERRIDDEN>No</ISEXCISEOVERRIDDEN>"; 
+     strXml += " <ISEXCISESUPPLYVCH>No</ISEXCISESUPPLYVCH>"; 
+     strXml += " <ISGSTOVERRIDDEN>No</ISGSTOVERRIDDEN>"; 
+     strXml += " <GSTNOTEXPORTED>No</GSTNOTEXPORTED>"; 
+     strXml += " <IGNOREGSTINVALIDATION>No</IGNOREGSTINVALIDATION>"; 
+     strXml += " <ISGSTREFUND>No</ISGSTREFUND>"; 
+     strXml += " <ISGSTSECSEVENAPPLICABLE>No</ISGSTSECSEVENAPPLICABLE>"; 
+     strXml += " <ISVATPRINCIPALACCOUNT>No</ISVATPRINCIPALACCOUNT>"; 
+     strXml += " <IGNOREEINVVALIDATION>No</IGNOREEINVVALIDATION>";
+     strXml += " <IRNJSONEXPORTED>No</IRNJSONEXPORTED>"; 
+     strXml += " <IRNCANCELLED>No</IRNCANCELLED>"; 
+     strXml += " <ISSHIPPINGWITHINSTATE>No</ISSHIPPINGWITHINSTATE>"; 
+	 strXml += "<ISOVERSEASTOURISTTRANS>No</ISOVERSEASTOURISTTRANS>"; 
+     strXml += " <ISDESIGNATEDZONEPARTY>No</ISDESIGNATEDZONEPARTY>"; 
+     strXml += " <ISCANCELLED>No</ISCANCELLED>"; 
+     strXml += " <HASCASHFLOW>No</HASCASHFLOW>"; 
+     strXml += " <ISPOSTDATED>No</ISPOSTDATED>"; 
+     strXml += " <USETRACKINGNUMBER>No</USETRACKINGNUMBER>"; 
+     strXml += " <ISINVOICE>Yes</ISINVOICE>"; 
+     strXml += " <MFGJOURNAL>No</MFGJOURNAL>"; 
+     strXml += " <HASDISCOUNTS>No</HASDISCOUNTS>"; 
+     strXml += " <ASPAYSLIP>No</ASPAYSLIP>"; 
+     strXml += " <ISCOSTCENTRE>No</ISCOSTCENTRE>"; 
+     strXml += " <ISSTXNONREALIZEDVCH>No</ISSTXNONREALIZEDVCH>"; 
+     strXml += " <ISEXCISEMANUFACTURERON>No</ISEXCISEMANUFACTURERON>"; 
+     strXml += " <ISBLANKCHEQUE>No</ISBLANKCHEQUE>"; 
+     strXml += " <ISVOID>No</ISVOID>"; 
+     strXml += " <ORDERLINESTATUS>No</ORDERLINESTATUS>"; 
+     strXml += " <VATISAGNSTCANCSALES>No</VATISAGNSTCANCSALES>"; 
+     strXml += " <VATISPURCEXEMPTED>No</VATISPURCEXEMPTED>"; 
+     strXml += " <ISVATRESTAXINVOICE>No</ISVATRESTAXINVOICE>"; 
+     strXml += " <VATISASSESABLECALCVCH>No</VATISASSESABLECALCVCH>"; 
+     strXml += " <ISVATDUTYPAID>Yes</ISVATDUTYPAID>"; 
+     strXml += " <ISDELIVERYSAMEASCONSIGNEE>No</ISDELIVERYSAMEASCONSIGNEE>"; 
+     strXml += " <ISDISPATCHSAMEASCONSIGNOR>No</ISDISPATCHSAMEASCONSIGNOR>"; 
+     strXml += " <ISDELETEDVCHRETAINED>No</ISDELETEDVCHRETAINED>"; 
+     strXml += " <CHANGEVCHMODE>No</CHANGEVCHMODE>"; 
+     strXml += " <RESETIRNQRCODE>No</RESETIRNQRCODE>"; 
+     strXml += " <ALLINVENTORYENTRIES.LIST>"; 
+     strXml += "  <STOCKITEMNAME>"+ Material + "/STOCKITEMNAME>";
+     strXml += "  <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
+     strXml += "  <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "  <ISAUTONEGATE>No</ISAUTONEGATE>"; 
+     strXml += "  <ISCUSTOMSCLEARANCE>No</ISCUSTOMSCLEARANCE>"; 
+     strXml += "  <ISTRACKCOMPONENT>No</ISTRACKCOMPONENT>"; 
+     strXml += "  <ISTRACKPRODUCTION>No</ISTRACKPRODUCTION>"; 
+     strXml += "  <ISPRIMARYITEM>No</ISPRIMARYITEM>"; 
+     strXml += "  <ISSCRAP>No</ISSCRAP>"; 
+     strXml += "  <RATE>"+ Rate + "</RATE>"; 
+     strXml += "  <AMOUNT>-"+ Amount + "</AMOUNT>"; 
+     strXml += "  <ACTUALQTY>"+ netwt + "</ACTUALQTY>"; 
+     strXml += "  <BILLEDQTY>"+ netwt + "</BILLEDQTY>"; 
+     strXml += "  <ACCOUNTINGALLOCATIONS.LIST>"; 
+     strXml += "   <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "    <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += "   </OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "   <LEDGERNAME>"+ Purchaseac + "</LEDGERNAME>"; 
+     strXml += "   <GSTCLASS/>"; 
+     strXml += "   <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
+     strXml += "   <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
+     strXml += "   <REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
+     strXml += "   <ISPARTYLEDGER>No</ISPARTYLEDGER>"; 
+     strXml += "   <ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "   <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "   <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "   <AMOUNT>-"+ Amount + "</AMOUNT>"; 
+     strXml += "  </ACCOUNTINGALLOCATIONS.LIST>"; 
+     strXml += " </ALLINVENTORYENTRIES.LIST>"; 
+     strXml += " <LEDGERENTRIES.LIST>"; 
+     strXml += "  <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
+     strXml += "   <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
+     strXml += "  </OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "  <LEDGERNAME>"+ PartyName + "</LEDGERNAME>"; 
+     strXml += "  <GSTCLASS/>"; 
+     strXml += "  <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>"; 
+     strXml += "  <LEDGERFROMITEM>No</LEDGERFROMITEM>"; 
+     strXml += "  <REMOVEZEROENTRIES>No</REMOVEZEROENTRIES>"; 
+     strXml += "  <ISPARTYLEDGER>Yes</ISPARTYLEDGER>"; 
+     strXml += "  <ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>"; 
+     strXml += "  <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>"; 
+     strXml += "  <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>"; 
+     strXml += "  <AMOUNT>"+ Amount + "</AMOUNT>"; 
+     strXml += " </LEDGERENTRIES.LIST>"; 
+     strXml += " </VOUCHER>"; 
+     strXml += "</TALLYMESSAGE>";   
+	 					};	 
+                    
 strXml += "</REQUESTDATA>";
 strXml += "</IMPORTDATA>";
 strXml += "</BODY>";

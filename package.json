@@ -11,6 +11,7 @@
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
   "devDependencies": {
+    "http-proxy-middleware": "^2.0.3",
     "nodemon": "^1.18.3"
   },
   "dependencies": {
