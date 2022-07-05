@@ -27,11 +27,9 @@ app.use('/upload',(req, res, next) =>  {
 	if (req.method == 'POST') {
 		console.log(req);
         var jsonString = '';
-
         req.on('data', function (data) {
             jsonString += data;
         });
-
         req.on('end', function () {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
@@ -39,8 +37,7 @@ app.use('/upload',(req, res, next) =>  {
 			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
-            res.end(strXml)
-			
+            res.end(strXml)	
         });
     }	
 });
@@ -183,23 +180,20 @@ app.use('/purchase',(req, res, next) =>  {
 app.use('/husk',(req, res, next) =>  {
 
 	if (req.method == 'POST') {
+		console.log(req);
         var jsonString = '';
-
         req.on('data', function (data) {
             jsonString += data;
         });
-
         req.on('end', function () {
             console.log(JSON.parse(jsonString));
 			excelData = JSON.parse(jsonString);
 			husk();
-			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
-            res.end(strXml)
-			
+            res.end(strXml)	
         });
-		
     }	
 });
 
@@ -2344,11 +2338,10 @@ function husk(){
 						let netwt 			= (excelData[i]["NET WT"]);
 						let Narration 		= (excelData[i]["narration"]);
 						let Rate 			= (excelData[i]["RATE"]);
+						let Rateqt 			= (excelData[i]["QT TYPE"]);
 						let Amount 			= (excelData[i]["AMOUNT"]);
 						let Srno 			= (excelData[i]["Sr no"]);
-						let Purchaseac    	= (excelData[i]["Purchase AC"]);              
-
-                            
+						let Purchaseac    	= (excelData[i]["Purchase AC"]);                           
      strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
 	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
@@ -2373,10 +2366,10 @@ function husk(){
      strXml += "<STOCKITEMNAME>"+ Material + "</STOCKITEMNAME>";
      strXml += "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>"; 
      strXml += "<ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>"; 
-     strXml += "<RATE>"+ Rate + "</RATE>"; 
+     strXml += "<RATE>"+ Rate +""+ Rateqt +"</RATE>"; 
      strXml += "<AMOUNT>-"+ Amount + "</AMOUNT>"; 
-     strXml += "<ACTUALQTY>"+ netwt + "</ACTUALQTY>"; 
-     strXml += "<BILLEDQTY>"+ netwt + "</BILLEDQTY>"; 
+     strXml += "<ACTUALQTY>"+ netwt + "" + Rateqt +"</ACTUALQTY>"; 
+     strXml += "<BILLEDQTY>"+ netwt + "" + Rateqt +"</BILLEDQTY>"; 
      strXml += "<ACCOUNTINGALLOCATIONS.LIST>"; 
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
