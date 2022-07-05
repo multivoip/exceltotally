@@ -199,7 +199,8 @@ app.use('/husk',(req, res, next) =>  {
             res.end(strXml)
 			
         });
-    }	
+		
+    }	res.status(404).render('404', { pageTitle: 'Page Not Found' });
 });
 
 
