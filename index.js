@@ -2352,7 +2352,7 @@ strXml += "<REQUESTDATA>";
 
                             
      strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
-	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\" Purchase  \" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
+	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += "</OLDAUDITENTRYIDS.LIST>"; 
