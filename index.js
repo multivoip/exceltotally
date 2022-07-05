@@ -179,6 +179,7 @@ app.use('/purchase',(req, res, next) =>  {
     }	
 });
 
+<<<<<<< HEAD
 app.use('/husk',(req, res, next) =>  {
 
 	if (req.method == 'POST') {
@@ -202,6 +203,8 @@ app.use('/husk',(req, res, next) =>  {
 });
 
 
+=======
+>>>>>>> 9c0a768705ba3dd6639903726c5e134b36dbaf39
 app.use('/fees',(req, res, next) =>  {
 
 	if (req.method == 'POST') {
