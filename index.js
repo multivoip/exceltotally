@@ -2333,13 +2333,13 @@ function husk(){
     for (var i = 0; i < excelData.length; i++)
                     {
 						let PartyName 	    = (excelData[i]["Party Name"]);
-						let Dated 			= (excelData[i]["DATE"]);
+						let Dated 			= (excelData[i]["Date"]);
 						let Material		= (excelData[i]["Material"]);
-						let netwt 			= (excelData[i]["NET WT"]);
-						let Narration 		= (excelData[i]["narration"]);
-						let Rate 			= (excelData[i]["RATE"]);
+						let netwt 			= (excelData[i]["Net WT"]);
+						let Narration 		= (excelData[i]["Narration"]);
+						let Rate 			= (excelData[i]["Rate"]);
 						let Rateqt 			= (excelData[i]["QT TYPE"]);
-						let Amount 			= (excelData[i]["AMOUNT"]);
+						let Amount 			= (excelData[i]["Amount"]);
 						let Srno 			= (excelData[i]["Sr no"]);
 						let Purchaseac    	= (excelData[i]["Purchase AC"]);                           
      strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
