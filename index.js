@@ -2157,7 +2157,7 @@ strXml += "<REQUESTDATA>";
      strXml += " <ISCAPVATTAXALTERED>No</ISCAPVATTAXALTERED>";
      strXml += " <ISCAPVATNOTCLAIMED>No</ISCAPVATNOTCLAIMED>";
      strXml += " <AMOUNT>"+ Total + "</AMOUNT>";
-    strXml += "</LEDGERENTRIES.LIST>";
+	 strXml += "</LEDGERENTRIES.LIST>";
      strXml += "<LEDGERENTRIES.LIST>";
      strXml += " <OLDAUDITENTRYIDS.LIST TYPE=\"Number\">";
      strXml += "  <OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>";
@@ -2324,20 +2324,18 @@ strXml += "</ENVELOPE>";
 };
 
 function husk(){
-  strXml = "";
-strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-strXml += "<ENVELOPE>";
-strXml += "<HEADER>";
-strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
-strXml += "</HEADER>";
-strXml += "<BODY>";
-strXml += "<IMPORTDATA>";
-strXml += "<REQUESTDESC>";
-strXml += "<REPORTNAME>All Masters</REPORTNAME>";
-strXml += "</REQUESTDESC>";
-strXml += "<REQUESTDATA>";
-       
-						
+	strXml = "";
+	strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	strXml += "<ENVELOPE>";
+	strXml += "<HEADER>";
+	strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+	strXml += "</HEADER>";
+	strXml += "<BODY>";
+	strXml += "<IMPORTDATA>";
+	strXml += "<REQUESTDESC>";
+	strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+	strXml += "</REQUESTDESC>";
+	strXml += "<REQUESTDATA>";			
     for (var i = 0; i < excelData.length; i++)
                     {
 						let PartyName 	    = (excelData[i]["Party Name"]);
@@ -2408,12 +2406,11 @@ strXml += "<REQUESTDATA>";
      strXml += "</LEDGERENTRIES.LIST>"; 
      strXml += "</VOUCHER>"; 
      strXml += "</TALLYMESSAGE>";   
-	 					};	 
-                    
-strXml += "</REQUESTDATA>";
-strXml += "</IMPORTDATA>";
-strXml += "</BODY>";
-strXml += "</ENVELOPE>";
+	 					};                 
+	strXml += "</REQUESTDATA>";
+	strXml += "</IMPORTDATA>";
+	strXml += "</BODY>";
+	strXml += "</ENVELOPE>";
  
     //console.log(strXml);
 	return strXml;
