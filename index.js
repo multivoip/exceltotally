@@ -2318,7 +2318,7 @@ strXml += "</ENVELOPE>";
 };
 
 function husk(){
-	strXml = "";
+	{strXml = "";
 	strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	strXml += "<ENVELOPE>";
 	strXml += "<HEADER>";
@@ -2406,5 +2406,5 @@ function husk(){
 	strXml += "</ENVELOPE>";
  
     //console.log(strXml);
-	return strXml;
+	return strXml;}
 };
