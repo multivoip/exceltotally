@@ -2,6 +2,6 @@ git add .
 
 git commit -m "inting"
 
-heroku login
+heroku auth:login
 
 git push https://git.heroku.com/exceltotally.git main

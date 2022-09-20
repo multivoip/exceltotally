@@ -2708,7 +2708,6 @@ strXml += "<REQUESTDATA>";
 						let Narration 		= (excelData[i]["Narration"]);
 						let Rate 			= (excelData[i]["RATE"]);
 						let Amount 			= (excelData[i]["AMOUNT"]);
-						let qttype 			= (excelData[i]["QT TYPE"]);
 						let Srno 			= (excelData[i]["Sr no"]);
 						let Salesac	    	= (excelData[i]["Sales AC"]);
 						let vat		    	= (excelData[i]["VAT AC"]);
