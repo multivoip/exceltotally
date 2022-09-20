@@ -2368,7 +2368,8 @@ function husk(){
 	 strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Invoice Voucher View\">"; 
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
-     strXml += "</OLDAUDITENTRYIDS.LIST>"; 
+     strXml += "</OLDAUDITENTRYIDS.LIST>";
+	 strXml += "<NARRATION>" + Narration + "</NARRATION>";
      strXml += "<DATE>"+ Dated + "</DATE>"; 
      strXml += "<PARTYNAME>"+ PartyName + "</PARTYNAME>"; 
      strXml += "<PARTYLEDGERNAME>"+ PartyName + "</PARTYLEDGERNAME>"; 
@@ -2450,12 +2451,12 @@ strXml += "<REQUESTDATA>";
     for (var i = 0; i < excelData.length; i++)
                     {
 						let PartyName 	    = (excelData[i]["Party Name"]);
-						let Dated 			= (excelData[i]["DATE"]);
+						let Dated 			= (excelData[i]["Date"]);
 						let Material		= (excelData[i]["Material"]);
-						let netwt 			= (excelData[i]["NET WT"]);
+						let netwt 			= (excelData[i]["Net WT"]);
 						let Narration 		= (excelData[i]["Narration"]);
-						let Rate 			= (excelData[i]["RATE"]);
-						let Amount 			= (excelData[i]["AMOUNT"]);
+						let Rate 			= (excelData[i]["Rate"]);
+						let Amount 			= (excelData[i]["Amount"]);
 						let qttype 			= (excelData[i]["QT TYPE"]);
 						let Srno 			= (excelData[i]["Sr no"]);
 						let Salesac	    	= (excelData[i]["Sales AC"]);
@@ -2474,6 +2475,7 @@ strXml += "<REQUESTDATA>";
      strXml += "<OLDAUDITENTRYIDS.LIST TYPE=\"Number\">"; 
      strXml += "<OLDAUDITENTRYIDS>-1</OLDAUDITENTRYIDS>"; 
      strXml += " </OLDAUDITENTRYIDS.LIST>"; 
+	 strXml += "<NARRATION>" + Narration + "</NARRATION>";
      strXml += "<DATE>"+ Dated + "</DATE>"; 
      strXml += " <PARTYNAME>"+ PartyName + "</PARTYNAME>"; 
      strXml += " <PARTYLEDGERNAME>"+ PartyName + "</PARTYLEDGERNAME>"; 
