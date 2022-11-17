@@ -2709,18 +2709,19 @@ strXml += "<REQUESTDATA>";
 
     for (var i = 0; i < excelData.length; i++)
                     {
-                        let VOUCHERTYPE     = (excelData[i]["Receipt"]);
+                        let VOUCHERTYPE     = ("Receipt");
                         let DATE            = (excelData[i]["Instrument  Date"]);
                         let NAR       		= (excelData[i]["Instrument No"]) ;
 						let Applicant   	= (excelData[i]["Applicant Name"]);
 						let AppNo   		= (excelData[i]["App No"]);
 						let OnlineRefNo 	= (excelData[i]["Online Ref No"]);
-						let NARRATION       = ("Chq No. " + NAR + "Applicant " + Applicant + "App No " + AppNo + "Online Ref No " + OnlineRefNo) ;
+						let NARRATION       = ("Chq No. " + NAR + " Applicant " + Applicant + " App No " + AppNo + " Online Ref No " + OnlineRefNo) ;
                         let VOUCHERNUMBER   = (AppNo);
-                        let DRLEDGER        = (excelData[i]["Bank"]);
+						let BNAME   		= (excelData[i]["Bank Name"]);
+                        let DRLEDGER        = ("Bank");
                         let CRLEDGER        = (excelData[i]["ITS ID"]);
                         let AMOUNT          = (excelData[i]["Amount(INR )"]);
-                        let AMOUNT2          = (-(excelData[i]["Amount(INR )"]));
+                        let AMOUNT2         = (-(excelData[i]["Amount(INR )"]));
 
 
                              
@@ -2762,8 +2763,9 @@ strXml += "<REQUESTDATA>";
         strXml += "<DATE>"+ DATE + "</DATE>";
         strXml += "<INSTRUMENTDATE>"+ DATE + "</INSTRUMENTDATE>";
         strXml += "<BANKERSDATE></BANKERSDATE>";
-        strXml += "<NAME></NAME>";
+        strXml += "<NAME>" + BNAME + "</NAME>";
         strXml += "<TRANSACTIONTYPE>Cheque/DD</TRANSACTIONTYPE>";
+		strXml += "<INSTRUMENTNUMBER>"+ NAR + "</INSTRUMENTNUMBER>";
         strXml += "<PAYMENTFAVOURING>" + CRLEDGER + "</PAYMENTFAVOURING>";
         strXml += "<CHEQUECROSSCOMMENT>A/c Payee</CHEQUECROSSCOMMENT>";
         strXml += "<TRANSFERMODE>RTGS</TRANSFERMODE>";
