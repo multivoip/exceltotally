@@ -2743,9 +2743,9 @@ strXml += "<REQUESTDATA>";
                         strXml += "<LEDGERNAME>" + CRLEDGER + "</LEDGERNAME>";
                         strXml += "<GSTCLASS/>";
 
-                        strXml += "<ISDEEMEDPOSITIVE>" + bool + "</ISDEEMEDPOSITIVE>";
+                        strXml += "<ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>";
                         strXml += "<ISPARTYLEDGER>Yes</ISPARTYLEDGER>";
-                        strXml += "<ISLASTDEEMEDPOSITIVE>" + bool + "</ISLASTDEEMEDPOSITIVE>";
+                        strXml += "<ISLASTDEEMEDPOSITIVE>No</ISLASTDEEMEDPOSITIVE>";
                         strXml += "<AMOUNT>" + AMOUNT + "</AMOUNT>";
                         strXml += "<VATEXPAMOUNT>" + AMOUNT + "</VATEXPAMOUNT>";
                         strXml += "</ALLLEDGERENTRIES.LIST>";
@@ -2753,9 +2753,9 @@ strXml += "<REQUESTDATA>";
                         strXml += "<LEDGERNAME>" + DRLEDGER + "</LEDGERNAME>";
                         strXml += "<GSTCLASS/>";
 						
-                        strXml += "<ISDEEMEDPOSITIVE>" + bool1 + "</ISDEEMEDPOSITIVE>";
-                        strXml += "<ISPARTYLEDGER>" + bool2 + "</ISPARTYLEDGER>";
-                        strXml += "<ISLASTDEEMEDPOSITIVE>" + bool1 + "</ISLASTDEEMEDPOSITIVE>";
+                        strXml += "<ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>";
+                        strXml += "<ISPARTYLEDGER>Yes</ISPARTYLEDGER>";
+                        strXml += "<ISLASTDEEMEDPOSITIVE>Yes</ISLASTDEEMEDPOSITIVE>";
                         strXml += "<AMOUNT>" + AMOUNT2 + "</AMOUNT>";
 						strXml += "<SERVICETAXDETAILS.LIST>       </SERVICETAXDETAILS.LIST>";
 						strXml += "  <BANKALLOCATIONS.LIST>";
