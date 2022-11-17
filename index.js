@@ -243,6 +243,28 @@ app.use('/fees',(req, res, next) =>  {
     }	
 });
 
+app.use('/QHREC',(req, res, next) =>  {
+
+	if (req.method == 'POST') {
+        var jsonString = '';
+
+        req.on('data', function (data) {
+            jsonString += data;
+        });
+
+        req.on('end', function () {
+            console.log(JSON.parse(jsonString));
+			excelData = JSON.parse(jsonString);
+			QHREC();
+			 res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
+            res.end(strXml)
+			
+        });
+    }	
+});
+
 
 app.use((req, res, next) => {
   res.status(404).render('404', { pageTitle: 'Page Not Found' });
@@ -2662,6 +2684,128 @@ strXml += "<REQUESTDATA>";
      strXml += "</TALLYMESSAGE>";   
 	 					};	 
                     
+strXml += "</REQUESTDATA>";
+strXml += "</IMPORTDATA>";
+strXml += "</BODY>";
+strXml += "</ENVELOPE>";
+ 
+    //console.log(strXml);
+	return strXml;
+};
+ function QHREC(){
+  strXml = "";
+strXml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+strXml += "<ENVELOPE>";
+strXml += "<HEADER>";
+strXml += "<TALLYREQUEST>Import Data</TALLYREQUEST>";
+strXml += "</HEADER>";
+strXml += "<BODY>";
+strXml += "<IMPORTDATA>";
+strXml += "<REQUESTDESC>";
+strXml += "<REPORTNAME>All Masters</REPORTNAME>";
+strXml += "</REQUESTDESC>";
+strXml += "<REQUESTDATA>";
+    
+
+    for (var i = 0; i < excelData.length; i++)
+                    {
+                        let VOUCHERTYPE     = (excelData[i]["Receipt"]);
+                        let DATE            = (excelData[i]["Instrument  Date"]);
+                        let NAR       		= (excelData[i]["Instrument No"]) ;
+						let Applicant   	= (excelData[i]["Applicant Name"]);
+						let AppNo   		= (excelData[i]["App No"]);
+						let OnlineRefNo 	= (excelData[i]["Online Ref No"]);
+						let NARRATION       = ("Chq No. " + NAR + "Applicant " + Applicant + "App No " + AppNo + "Online Ref No " + OnlineRefNo) ;
+                        let VOUCHERNUMBER   = (AppNo);
+                        let DRLEDGER        = (excelData[i]["Bank"]);
+                        let CRLEDGER        = (excelData[i]["ITS ID"]);
+                        let AMOUNT          = (excelData[i]["Amount(INR )"]);
+                        let AMOUNT2          = (-(excelData[i]["Amount(INR )"]));
+                        let bool            = "";
+                        let bool1           = "";
+                        let bool2           = "Yes";
+                        if (VOUCHERTYPE == "Payment" || VOUCHERTYPE == "Journal"){
+                            bool  = "Yes";
+                            bool1 = "No";
+                        }else {bool="No", bool1  = "Yes"};
+                        
+                        if (VOUCHERTYPE == "Receipt" || VOUCHERTYPE == "Contra"){
+                            DRLEDGER        = (excelData[i]["CR.LEDGER"]);
+                            CRLEDGER        = (excelData[i]["DR.LEDGER"]);
+                        };
+                      
+                        
+                        if (VOUCHERTYPE == "Journal"){
+                             bool2           = "No";
+                        };
+                        if (VOUCHERTYPE == "Payment" || VOUCHERTYPE == "Journal"){
+                            AMOUNT          = (-(excelData[i]["LEDGERAMOUNT"]));
+                            AMOUNT2          = (excelData[i]["LEDGERAMOUNT"]);
+                        };
+                            
+                        strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
+                        strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"" + VOUCHERTYPE +  "\" ACTION=\"Create\">";
+                        strXml += "<DATE>"+ DATE + "</DATE>";
+                        strXml += "<GUID></GUID>";
+                        strXml += "<NARRATION>" + NARRATION + "</NARRATION>";
+                        strXml += "<VOUCHERTYPENAME>" + VOUCHERTYPE +" </VOUCHERTYPENAME>";
+                        strXml += "<VOUCHERNUMBER>" + VOUCHERNUMBER + "</VOUCHERNUMBER>";
+                        strXml += "<PARTYLEDGERNAME>" + DRLEDGER + "</PARTYLEDGERNAME>";
+                        strXml += "<CSTFORMISSUETYPE/>";
+                        strXml += "<CSTFORMRECVTYPE/>";
+                        strXml += "<PERSISTEDVIEW>Accounting Voucher View</PERSISTEDVIEW>";
+                        strXml += "<VCHGSTCLASS/>";
+                        strXml += "<HASCASHFLOW>Yes</HASCASHFLOW>";
+						strXml += "<ISPOSTDATED>Yes</ISPOSTDATED>";
+
+                        strXml += "<ALLLEDGERENTRIES.LIST>";
+                        strXml += "<LEDGERNAME>" + DRLEDGER + "</LEDGERNAME>";
+                        strXml += "<GSTCLASS/>";
+
+                        strXml += "<ISDEEMEDPOSITIVE>" + bool + "</ISDEEMEDPOSITIVE>";
+                        strXml += "<ISPARTYLEDGER>Yes</ISPARTYLEDGER>";
+                        strXml += "<ISLASTDEEMEDPOSITIVE>" + bool + "</ISLASTDEEMEDPOSITIVE>";
+                        strXml += "<AMOUNT>" + AMOUNT + "</AMOUNT>";
+                        strXml += "<VATEXPAMOUNT>" + AMOUNT + "</VATEXPAMOUNT>";
+                        strXml += "</ALLLEDGERENTRIES.LIST>";
+                        strXml += "<ALLLEDGERENTRIES.LIST>";
+                        strXml += "<LEDGERNAME>" + CRLEDGER + "</LEDGERNAME>";
+                        strXml += "<GSTCLASS/>";
+						
+                        strXml += "<ISDEEMEDPOSITIVE>" + bool1 + "</ISDEEMEDPOSITIVE>";
+                        strXml += "<ISPARTYLEDGER>" + bool2 + "</ISPARTYLEDGER>";
+                        strXml += "<ISLASTDEEMEDPOSITIVE>" + bool1 + "</ISLASTDEEMEDPOSITIVE>";
+                        strXml += "<AMOUNT>" + AMOUNT2 + "</AMOUNT>";
+						strXml += "<SERVICETAXDETAILS.LIST>       </SERVICETAXDETAILS.LIST>";
+						strXml += "  <BANKALLOCATIONS.LIST>";
+        strXml += "<DATE>"+ DATE + "</DATE>";
+        strXml += "<INSTRUMENTDATE>"+ DATE + "</INSTRUMENTDATE>";
+        strXml += "<BANKERSDATE></BANKERSDATE>";
+        strXml += "<NAME></NAME>";
+        strXml += "<TRANSACTIONTYPE>Cheque/DD</TRANSACTIONTYPE>";
+        strXml += "<PAYMENTFAVOURING>" + DRLEDGER + "</PAYMENTFAVOURING>";
+        strXml += "<CHEQUECROSSCOMMENT>A/c Payee</CHEQUECROSSCOMMENT>";
+        strXml += "<TRANSFERMODE>RTGS</TRANSFERMODE>";
+        strXml += "<UNIQUEREFERENCENUMBER></UNIQUEREFERENCENUMBER>";
+        strXml += "<STATUS>No</STATUS>";
+        strXml += "<PAYMENTMODE>Transacted</PAYMENTMODE>";
+        strXml += "<SECONDARYSTATUS/>";
+        strXml += "<BANKPARTYNAME>" + DRLEDGER + "</BANKPARTYNAME>";
+        strXml += "<ISCONNECTEDPAYMENT>No</ISCONNECTEDPAYMENT>";
+        strXml += "<ISSPLIT>No</ISSPLIT>";
+		strXml += " <ISCONTRACTUSED>No</ISCONTRACTUSED>";
+		strXml += " <ISACCEPTEDWITHWARNING>No</ISACCEPTEDWITHWARNING>";
+        strXml += "<ISTRANSFORCED>No</ISTRANSFORCED>";
+        strXml += "<CHEQUEPRINTED> 1</CHEQUEPRINTED>";
+        strXml += "<AMOUNT>" + AMOUNT2 + "</AMOUNT>";
+        strXml += "<CONTRACTDETAILS.LIST>        </CONTRACTDETAILS.LIST>";
+        strXml += "<BANKSTATUSINFO.LIST>        </BANKSTATUSINFO.LIST>";
+		strXml += "</BANKALLOCATIONS.LIST>";
+                        strXml += "<VATEXPAMOUNT>" + AMOUNT2 + "</VATEXPAMOUNT>";
+                        strXml += "</ALLLEDGERENTRIES.LIST>";
+                        strXml += "</VOUCHER>";            
+                        strXml += "</TALLYMESSAGE>";                      
+                     };   
 strXml += "</REQUESTDATA>";
 strXml += "</IMPORTDATA>";
 strXml += "</BODY>";
