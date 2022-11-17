@@ -2721,28 +2721,9 @@ strXml += "<REQUESTDATA>";
                         let CRLEDGER        = (excelData[i]["ITS ID"]);
                         let AMOUNT          = (excelData[i]["Amount(INR )"]);
                         let AMOUNT2          = (-(excelData[i]["Amount(INR )"]));
-                        let bool            = "";
-                        let bool1           = "";
-                        let bool2           = "Yes";
-                        if (VOUCHERTYPE == "Payment" || VOUCHERTYPE == "Journal"){
-                            bool  = "Yes";
-                            bool1 = "No";
-                        }else {bool="No", bool1  = "Yes"};
-                        
-                        if (VOUCHERTYPE == "Receipt" || VOUCHERTYPE == "Contra"){
-                            DRLEDGER        = (excelData[i]["CR.LEDGER"]);
-                            CRLEDGER        = (excelData[i]["DR.LEDGER"]);
-                        };
-                      
-                        
-                        if (VOUCHERTYPE == "Journal"){
-                             bool2           = "No";
-                        };
-                        if (VOUCHERTYPE == "Payment" || VOUCHERTYPE == "Journal"){
-                            AMOUNT          = (-(excelData[i]["LEDGERAMOUNT"]));
-                            AMOUNT2          = (excelData[i]["LEDGERAMOUNT"]);
-                        };
-                            
+
+
+                             
                         strXml += "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">";
                         strXml += "<VOUCHER REMOTEID=\"\" VCHKEY=\"\" VCHTYPE=\"" + VOUCHERTYPE +  "\" ACTION=\"Create\">";
                         strXml += "<DATE>"+ DATE + "</DATE>";
@@ -2750,7 +2731,7 @@ strXml += "<REQUESTDATA>";
                         strXml += "<NARRATION>" + NARRATION + "</NARRATION>";
                         strXml += "<VOUCHERTYPENAME>" + VOUCHERTYPE +" </VOUCHERTYPENAME>";
                         strXml += "<VOUCHERNUMBER>" + VOUCHERNUMBER + "</VOUCHERNUMBER>";
-                        strXml += "<PARTYLEDGERNAME>" + DRLEDGER + "</PARTYLEDGERNAME>";
+                        strXml += "<PARTYLEDGERNAME>" + CRLEDGER + "</PARTYLEDGERNAME>";
                         strXml += "<CSTFORMISSUETYPE/>";
                         strXml += "<CSTFORMRECVTYPE/>";
                         strXml += "<PERSISTEDVIEW>Accounting Voucher View</PERSISTEDVIEW>";
@@ -2759,7 +2740,7 @@ strXml += "<REQUESTDATA>";
 						strXml += "<ISPOSTDATED>Yes</ISPOSTDATED>";
 
                         strXml += "<ALLLEDGERENTRIES.LIST>";
-                        strXml += "<LEDGERNAME>" + DRLEDGER + "</LEDGERNAME>";
+                        strXml += "<LEDGERNAME>" + CRLEDGER + "</LEDGERNAME>";
                         strXml += "<GSTCLASS/>";
 
                         strXml += "<ISDEEMEDPOSITIVE>" + bool + "</ISDEEMEDPOSITIVE>";
@@ -2769,7 +2750,7 @@ strXml += "<REQUESTDATA>";
                         strXml += "<VATEXPAMOUNT>" + AMOUNT + "</VATEXPAMOUNT>";
                         strXml += "</ALLLEDGERENTRIES.LIST>";
                         strXml += "<ALLLEDGERENTRIES.LIST>";
-                        strXml += "<LEDGERNAME>" + CRLEDGER + "</LEDGERNAME>";
+                        strXml += "<LEDGERNAME>" + DRLEDGER + "</LEDGERNAME>";
                         strXml += "<GSTCLASS/>";
 						
                         strXml += "<ISDEEMEDPOSITIVE>" + bool1 + "</ISDEEMEDPOSITIVE>";
@@ -2783,14 +2764,14 @@ strXml += "<REQUESTDATA>";
         strXml += "<BANKERSDATE></BANKERSDATE>";
         strXml += "<NAME></NAME>";
         strXml += "<TRANSACTIONTYPE>Cheque/DD</TRANSACTIONTYPE>";
-        strXml += "<PAYMENTFAVOURING>" + DRLEDGER + "</PAYMENTFAVOURING>";
+        strXml += "<PAYMENTFAVOURING>" + CRLEDGER + "</PAYMENTFAVOURING>";
         strXml += "<CHEQUECROSSCOMMENT>A/c Payee</CHEQUECROSSCOMMENT>";
         strXml += "<TRANSFERMODE>RTGS</TRANSFERMODE>";
         strXml += "<UNIQUEREFERENCENUMBER></UNIQUEREFERENCENUMBER>";
         strXml += "<STATUS>No</STATUS>";
         strXml += "<PAYMENTMODE>Transacted</PAYMENTMODE>";
         strXml += "<SECONDARYSTATUS/>";
-        strXml += "<BANKPARTYNAME>" + DRLEDGER + "</BANKPARTYNAME>";
+        strXml += "<BANKPARTYNAME>" + CRLEDGER + "</BANKPARTYNAME>";
         strXml += "<ISCONNECTEDPAYMENT>No</ISCONNECTEDPAYMENT>";
         strXml += "<ISSPLIT>No</ISSPLIT>";
 		strXml += " <ISCONTRACTUSED>No</ISCONTRACTUSED>";
