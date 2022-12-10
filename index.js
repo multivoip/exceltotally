@@ -267,7 +267,15 @@ app.use('/QHREC',(req, res, next) =>  {
 
 
 app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found' });
+  res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
+});
+
+app.use('/test',(req, res, next) =>  {
+
+	res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
+			
+        });
+    }	
 });
 
 app.listen(PORT);

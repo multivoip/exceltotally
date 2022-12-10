@@ -7,3 +7,13 @@ git commit -m "inting"
 heroku auth:login
 
 git push https://git.heroku.com/exceltotally.git main
+
+
+
+firebase login
+
+firebase projects:list
+
+firebase init
+
+firebase deploy
