@@ -17,3 +17,8 @@ firebase projects:list
 firebase init
 
 firebase deploy
+
+
+aws
+itstime4masti@gmail.com
+Excel2tally@
