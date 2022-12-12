@@ -10,17 +10,17 @@ var excelData = [];
 
 
 var strXml = "";
-//app.use('/',(req, res, next) =>  {
+app.use('/',(req, res, next) =>  {
 
 	
 		
-		//res.end('Hello World!');
+		res.end('Hello World!');
 		
     
 
           
    	
-//});
+});
 
 app.use('/upload',(req, res, next) =>  {
 
