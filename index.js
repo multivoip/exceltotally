@@ -7,10 +7,7 @@ const https = require('https').Server(app);
 var PORT = process.env.PORT || 5500
 var excelData = [];
 
-
-
 var strXml = "";
-
 
 app.use('/upload',(req, res, next) =>  {
 
@@ -29,7 +26,10 @@ app.use('/upload',(req, res, next) =>  {
 			res.writeHead(200, 'OK', {'Content-Type': 'text/html'})
             res.end(strXml)	
         });
-    }	
+    }	if (req.method == 'GET') {
+        res.end('Please Use exceltotally.netlify.com for upload'); 
+
+    }
 });
 
 app.use('/uploaddxb',(req, res, next) =>  {
@@ -256,13 +256,13 @@ app.use('/QHREC',(req, res, next) =>  {
 });
 
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
-});
+//app.use((req, res, next) => {
+  //res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
+//});
 
 app.use('/test',(req, res, next) =>  {
 
-	res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
+	res.end('Hello World! your test Succed'); 
 			
         });
         
