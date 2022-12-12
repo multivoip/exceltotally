@@ -4,6 +4,11 @@ git add .
 
 git commit -m "inting"
 
+git push https://github.com/multivoip/exceltotally
+
+
+
+
 heroku auth:login
 
 git push https://git.heroku.com/exceltotally.git main

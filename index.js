@@ -10,17 +10,7 @@ var excelData = [];
 
 
 var strXml = "";
-app.use('/',(req, res, next) =>  {
 
-	
-		
-		res.end('Hello World!');
-		
-    
-
-          
-   	
-});
 
 app.use('/upload',(req, res, next) =>  {
 
@@ -275,7 +265,10 @@ app.use('/test',(req, res, next) =>  {
 	res.status(404).render('404', { pageTitle: 'excel to tally Page Not Found' });
 			
         });
- 
+        
+app.use('/',(req, res, next) =>  {
+            res.end('Hello World!');                      
+    });
 
 app.listen(PORT);
 
